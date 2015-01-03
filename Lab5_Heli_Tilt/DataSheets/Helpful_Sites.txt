@@ -1,0 +1,12 @@
+GLCD References:
+http://jormungand.net/projects/devices/avrlcd/
+http://www.agehringer.com/pong-clock
+https://www.pjrc.com/tech/8051/board5/lcd_128x64.html
+http://en.radzio.dxp.pl/ks0108/
+http://www.techtoys.com.hk/8051/AT89S52-gLCD-STK1/chp8_JHD12864LCD.pdf
+
+Motor References:
+http://learningaboutelectronics.com/Articles/Vibration-motor-circuit.php
+
+Random Number Generator:
+http://stackoverflow.com/questions/7602919/how-do-i-generate-random-numbers-without-rand-function

@@ -1,0 +1,21 @@
+-myuxi
+-Y
+-v 0x8000
+-b HOME = 0x0000
+-b ISEG = 0x0080
+-b BSEG = 0x0000
+-k C:\Program Files (x86)\SDCC\lib
+-k C:\Program Files (x86)\SDCC\bin\..\lib\large
+-l mcs51
+-l libsdcc
+-l libint
+-l liblong
+-l libfloat
+obj\Release\ADXL345.rel
+obj\Release\i2c.rel
+obj\Release\init.rel
+obj\Release\lcd.rel
+obj\Release\main.rel
+obj\Release\terminal_comm.rel
+
+-e

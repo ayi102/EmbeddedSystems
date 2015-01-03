@@ -1,0 +1,38 @@
+Name     NVRAM_CONTROL ;
+PartNo   00 ;
+Date     10/2/2014 ;
+Revision 01 ;
+Designer Engineer ;
+Company  CU-Boulder ;
+Assembly None ;
+Location  ;
+Device   g16v8a ;
+
+/* *************** INPUT PINS *********************/
+PIN 1 = A11;  /*High Byte Address bit 11*/
+PIN 2 = A12;  /*High Byte Address bit 12*/ 
+PIN 3 = A13;  /*High Byte Address bit 13*/
+PIN 4 = A10;  /*High Byte Address bit 10*/
+PIN 5 = A14;  /*High Byte Address bit 14*/ 
+PIN 6 = A15;  /*High Byte Address bit 15*/ 
+PIN 7 = RD;   /*8051 Data Read Strobe*/  
+PIN 9 = WR;   /*8051 Data Write Strobe*/
+
+/* *************** OUTPUT PINS *********************/
+PIN 12 = READ;     /*Control pin that signifies only a program memory read */ 
+PIN 13 = CSPERIPH; /*Control enable for peripherals*/ 
+PIN 14 = CE;       /*Control enable for SVRAM*/
+PIN 15 = CLOCK;    /*Clock for 374 latch*/
+PIN 16 = OC374;    /*Output control for 374 latch*/   
+
+FIELD ADDR = [A15..A10];
+/* *************** LOGIC ************************* */
+
+READ = RD;                           			/*If a data memory read is initiated, enable output of NVSRAM*/
+CSPERIPH = !(A15 & A14 & A13 & A12); 			/*Enable Peripherals only if High Byte is Fh*/
+CE = !(ADDR:#) # A15; 	                                /*Enable SVRAM for memories 0400h to 7FFFh*/
+CLOCK = WR & !A15;                   			/*CLOCK only goes high if there is a write and for a memory address between 0 to 7FFFh*/
+OC374 = A15 & !A15;                  			/*Latch is always enabled to output*/
+
+
+

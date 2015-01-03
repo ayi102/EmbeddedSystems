@@ -1,0 +1,36 @@
+/*Author: Ali Ismail*/
+Name     NVRAM_controller ;
+PartNo   00 ;
+Date     9/17/2014 ;
+Revision 01 ;
+Designer Engineer ;
+Company  University of Colorado ;
+Assembly None ;
+Location  ;
+Device   g16v8a ;
+
+/* *************** INPUT PINS *********************/
+PIN 2 = A12;  /*High Byte Address bit 12*/ 
+PIN 3 = A13;  /*High Byte Address bit 13*/ 
+PIN 5 = A14;  /*High Byte Address bit 14*/ 
+PIN 6 = A15;  /*High Byte Address bit 15*/ 
+PIN 7 = RD;   /*8051 Data Read Strobe*/ 
+PIN 8 = PSEN; /*External Program memory Read Strobe*/ 
+PIN 9 = WR;   /*8051 Data Write*/
+
+/* *************** OUTPUT PINS *********************/
+PIN 12 = READ;     /*Control pin that signifies only a program memory read */ 
+PIN 13 = CSPERIPH; /*Control enable for peripherals*/ 
+PIN 14 = CE;       /*Control enable for SVRAM*/
+PIN 15 = CLOCK;    /*Clock for 374 latch*/
+PIN 16 = OC374;    /*Output control for 374 latch*/   
+
+/* *************** LOGIC ************************* */
+
+READ = PSEN;                         /*If a external program memory read is initiated, enable read signal control*/
+CSPERIPH = !(A15 & A14 & A13 & A12); /*Enable Peripherals only if High Byte is Fh*/
+CE = A15;                            /*Enable NVRAM for memories 0 to 7FFFh*/
+CLOCK = WR & !A15;                   /*CLOCK only goes high if there is a write and for a memory address between 0 to 7FFFh*/
+OC374 = A15 & !A15;                  /*Latch is always enabled to output*/
+
+

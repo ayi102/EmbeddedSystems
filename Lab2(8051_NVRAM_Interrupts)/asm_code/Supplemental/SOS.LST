@@ -1,0 +1,58 @@
+DUNFIELD 8051 ASSEMBLER: SOS                                          PAGE: 1
+
+0000                         1          ORG     $0000
+0000  01 02                  2          AJMP    INIT
+0002                         3  INIT:
+0002  75 89 01               4          MOV     TMOD,#01h       ;16-bit timer operating mode
+0005  78 00                  5          MOV     R0,#0           ;Count local delay iteraitons
+0007  79 00                  6          MOV     R1,#0           ;Count timer overflows
+0009                         7  MAIN:
+0009                         8  S_LOOP:
+0009  D2 92                  9          SETB    P1.2            ;Turn the LED ON for 0.5 seconds
+000B  12 00 38              10          LCALL   S_INIT
+000E  C2 92                 11          CLR     P1.2            ;Turn the LED OFF for 0.5 seconds
+0010  12 00 38              12          LCALL   S_INIT
+0013  B8 06 F3              13          CJNE    R0,#6,S_LOOP    ;Ensure LED ON OFF sequences happens 3 times
+0016  78 00                 14          MOV     R0,#0           ;Reset the local delay counter
+0018                        15  O_LOOP:
+0018  D2 92                 16          SETB    P1.2            ;Turn the LED ON for 1.5 seconds
+001A  12 00 4F              17          LCALL   O_INIT
+001D  C2 92                 18          CLR     P1.2            ;Turn the LED OFF for 0.5 seconds
+001F  12 00 38              19          LCALL   S_INIT          
+0022  B8 06 F3              20          CJNE    R0,#6,O_LOOP    ;Ensure LED ON OFF sequences happens 3 times
+0025  78 00                 21          MOV     R0,#0           ;Reset the local delay counter
+0027                        22  S_LOOP2:
+0027  D2 92                 23          SETB    P1.2            ;Turn the LED ON for 0.5 seconds
+0029  12 00 38              24          LCALL   S_INIT
+002C  C2 92                 25          CLR     P1.2            ;Turn the LED OFF for 0.5 seconds
+002E  12 00 38              26          LCALL   S_INIT
+0031  B8 06 F3              27          CJNE    R0,#6,S_LOOP2   ;Ensure LED ON OFF sequence happens 3 times
+0034  78 00                 28          MOV     R0,#0           ;Reset the local delay counter
+0036                        29          
+0036  01 09                 30          AJMP    MAIN            ;Infinit loop
+0038                        31  S_INIT:
+0038  75 8C DB              32          MOV     TH0,#0dbh       ;Set the timer to count 9216 50 times (.01 seconds * 50 = .5 s) 
+003B  75 8A FF              33          MOV     TL0,#0ffh
+003E  D2 8C                 34          SETB    TCON.4          ;Turn timer 0 on
+0040                        35  S_FREQ:
+0040  30 8D FD              36          JNB     TCON.5,S_FREQ   ;Poll on timer 0 overflow flag
+0043  C2 8D                 37          CLR     TCON.5          ;Clear overflow flag
+0045  C2 8C                 38          CLR     TCON.4          ;Turn timer 0 off
+0047  09                    39          INC     R1              ;Increment counter tracking timer overflows
+0048  B9 32 ED              40          CJNE    R1,#032h,S_INIT ;Poll on timer if the count has not been met
+004B  79 00                 41          MOV     R1,#0           ;Reset the counter
+004D  08                    42          INC     R0              ;Increment counter tracking toggling of port pin
+004E  22                    43          RET        
+004F                        44  O_INIT:
+004F  75 8C DB              45          MOV     TH0,#0dbh       ;Set the timer to count 9216 50 times (.01 seconds * 150 = 1.5 s) 
+0052  75 8A FF              46          MOV     TL0,#0ffh       ;Reset the timer
+0055  D2 8C                 47          SETB    TCON.4          ;Turn timer 0 on
+0057                        48  O_FREQ:
+0057  30 8D FD              49          JNB     TCON.5,O_FREQ   ;Poll on timer 0 overflow flag
+005A  C2 8D                 50          CLR     TCON.5          ;Clear overflow flag
+005C  C2 8C                 51          CLR     TCON.4          ;Turn timer 0 off
+005E  09                    52          INC     R1              ;Increment counter tracking timer overflows
+005F  B9 96 ED              53          CJNE    R1,#096h,O_INIT ;Poll on timer if the count has not been met
+0062  79 00                 54          MOV     R1,#0           ;Reset the counter
+0064  08                    55          INC     R0              ;Increment counter tracking toggling of port pin
+0065  22                    56          RET

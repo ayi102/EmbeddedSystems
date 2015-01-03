@@ -1,0 +1,24 @@
+DUNFIELD 8051 ASSEMBLER: ECHORS232                                    PAGE: 1
+
+0000                         1  ;;; This program echos every character it receives from the host machine
+0000                         2  	ORG	$0000
+0000  01 02                  3          AJMP    INIT
+0002                         4  INIT:
+0002  D2 9C                  5          SETB    SCON.4          ;Enable receiver of serial port
+0004  D2 9E                  6          SETB    SCON.6          ;Mode 1 : 8-bit UART, variable baud rate
+0006  75 89 20               7          MOV     TMOD,#20h       ;Mode 2 : 8-bit auto-reload timer
+0009  75 8D FD               8          MOV     TH1,#0FDh       ;9600 BAUD Rate
+000C  D2 8E                  9          SETB    TCON.6          ;Start Timer 1        
+000E                        10  RECEIVE:
+000E                        11  WAIT1:  
+000E  30 98 FD              12          JNB     SCON.0,WAIT1    ;Wait for the first character from the host
+0011  C2 98                 13          CLR     SCON.0          ;Reset the R0 flag
+0013  E5 99                 14          MOV     A,SBUF          ;Grab the data received
+0015                        15  SEND_ECHO:
+0015  F5 99                 16          MOV     SBUF,A          ;Send the data back
+0017                        17  WAIT2:
+0017  30 99 FD              18          JNB     SCON.1,WAIT2    ;Wait for it to be ok to send data out
+001A  C2 99                 19          CLR     SCON.1          ;Clear TI to send next char
+001C  01 0E                 20          AJMP    RECEIVE
+001E                        21          
+001E                        22  

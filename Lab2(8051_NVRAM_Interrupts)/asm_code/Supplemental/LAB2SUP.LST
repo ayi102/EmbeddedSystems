@@ -1,0 +1,47 @@
+DUNFIELD 8051 ASSEMBLER: LAB2SUP                                      PAGE: 1
+
+0000                         1  ;;; Credits: http://www.8052.com/tuttimer.phtml for setting up Timer help
+0000                         2  ;;; Author: Ali Ismail
+0000                         3          ORG     $0000
+0000  01 0E                  4          AJMP    INIT
+0002                         5  
+000B                         6          ORG     $000b           ;TImer 0 Interrupt location
+000B  02 00 30               7          LJMP    ISR
+000E                         8  INIT:
+000E  75 A8 82               9          MOV     IE,#082h        ;Enable Interrupts and Timer 0
+0011  75 89 01              10          MOV     TMOD,#01h       ;16-bit timer operating mode
+0014  75 8C DB              11          MOV     TH0,#0dbh       ;Set up timer to count to 9216, 22 times to achieve 2.3 Hz
+0017  75 8A FF              12          MOV     TL0,#0ffh
+001A  78 00                 13          MOV     R0,#0           ;Counter that will count to 22
+001C  79 00                 14          MOV     R1,#000h        ;Counter that counts between 00-7Fh for MAIN
+001E  7A 80                 15          MOV     R2,#080h        ;Counter that counts between 80-FFh for ISR
+0020  90 04 00              16          MOV     DPTR,#0400h     ;Pick a random area in external memory to write to
+0023  75 88 10              17          MOV     TCON,#010h      ;Start Timer 0
+0026                        18  MAIN:
+0026  B9 80 02              19          CJNE    R1,#080h,WRITE  ;If R1 is less than 07F, then do a write
+0029  79 00                 20          MOV     R1,#00h         ;Reset MAIN's counter
+002B                        21  WRITE:
+002B  E9                    22          MOV     A,R1            ;Move counter into accumalator so it can be written
+002C  F0                    23          MOVX    @DPTR,A         ;Do a write to memory, which will get captured by the latch
+002D  09                    24          INC     R1              ;Inc R1 since it is still under the max
+002E  01 26                 25          AJMP    MAIN            ;Infinite Loop
+0030                        26  ISR:
+0030  C0 E0                 27          PUSH    A                   ;Push A onto the stack in the case the ISR writes over the Accumulator
+0032  BA 00 02              28          CJNE    R2,#00h,WRITE_ISR  ;If R2 is less than FF, then do a write
+0035  7A 80                 29          MOV     R2,#080h
+0037                        30  WRITE_ISR:
+0037  EA                    31          MOV     A,R2            ;Move counter into accumalator so it can be written
+0038  F0                    32          MOVX    @DPTR,A         ;Do a write to memory, which will get captured by the latch
+0039  0A                    33          INC     R2
+003A  B2 91                 34          CPL     P1.1            ;Toggle unused port pin each time ISR executes
+003C  08                    35          INC     R0              ;Increment the counter
+003D  75 8C DB              36          MOV     TH0,#0dbh       ;Reset Timer 0 timer
+0040  75 8A FF              37          MOV     TL0,#0ffh
+0043  B8 16 04              38          CJNE    R0,#016h,DONE   ;Check if the ISR ran 22 times
+0046  B2 92                 39          CPL     P1.2            ;Toggle port at 2.3 Hz
+0048  78 00                 40          MOV     R0,#0           ;Clear counter
+004A                        41  DONE:
+004A  B2 91                 42          CPL     P1.1            ;Toggle unused port pin to low
+004C  D0 E0                 43          POP     A               ;Restor the accumulator after the ISR
+004E  32                    44          RETI
+004F                        45          

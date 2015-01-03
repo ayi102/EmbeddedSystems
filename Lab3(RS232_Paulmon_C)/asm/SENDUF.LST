@@ -1,0 +1,23 @@
+DUNFIELD 8051 ASSEMBLER: SENDUF                                       PAGE: 1
+
+0000                         1  ;;; This program sends the letter "U" to the terminal on the host PC
+0000                         2  ;;; Author: Ali Ismail
+2000                         3  	ORG	$2000
+2000  01 02                  4          AJMP    INIT
+2002                         5  INIT:
+2002  D2 9C                  6          SETB    SCON.4          ;Enable receiver of serial port
+2004  D2 9E                  7          SETB    SCON.6          ;Mode 1 : 8-bit UART, variable baud rate
+2006  43 89 20               8          ORL     TMOD,#20h       ;Mode 2 : 8-bit auto-reload timer
+2009  75 8D FF               9          MOV     TH1,#0FFh       ;9600 BAUD Rate
+200C  43 87 80              10          ORL     PCON,#80h
+200F  D2 99                 11          SETB    SCON.1          ;Reset the Timer to send transaction for the first time
+2011  D2 8E                 12          SETB    TCON.6          ;Start Timer 1        
+2013                        13  SEND_U:
+2013                        14  WAIT:
+2013  30 99 FD              15          JNB     SCON.1,WAIT     ;Wait for it to be ok to send data out
+2016  75 99 55              16          MOV     SBUF,#85        ;Send the data back
+2019  C2 99                 17          CLR     SCON.1          ;Clear TI to send next char
+201B  01 13                 18          AJMP    SEND_U
+201D                        19  
+201D                        20          
+201D                        21  

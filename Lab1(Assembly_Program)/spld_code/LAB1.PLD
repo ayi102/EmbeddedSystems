@@ -1,0 +1,28 @@
+Name     Lab1 ;
+PartNo   00 ;
+Date     9/3/2014 ;
+Revision 01 ;
+Designer Engineer ;
+Company  CU-Boulder ;
+Assembly None ;
+Location  ;
+Device   g16v8a ;
+
+/* *************** INPUT PINS *********************/
+PIN 2 = RD;   /*Read signal*/ 
+PIN 3 = PSEN; /*External Read Strobe*/
+PIN 4 = A15;  /*Address Bit*/ 
+PIN 5 = A14;  /*Address Bit*/ 
+PIN 6 = A13;  /*Address Bit*/ 
+PIN 7 = A12;  /*Address Bit*/ 
+ 
+
+/* *************** OUTPUT PINS *********************/
+PIN 12 = READ;     /*Read outcome*/ 
+PIN 13 = CSPERIPH; /*Control Signal Peripherals*/ 
+
+/* ***************    LOGIC    *********************/
+READ = RD & PSEN;                    /*If RD or PSEN are actively low, READ should be actively low*/
+CSPERIPH = !(A15 & A14 & A13 & A12); /*CSPERIPH should be low when MSB of address is Fh*/
+
+

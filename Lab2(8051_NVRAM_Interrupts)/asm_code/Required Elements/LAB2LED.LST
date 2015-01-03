@@ -1,0 +1,64 @@
+DUNFIELD 8051 ASSEMBLER: LAB2LED                                      PAGE: 1
+;
+               Cycles/Inst.
+0000                         1  ;;; Credits: http://www.8052.com/tuttimer.phtml for setting up Timer help
+0000                         2  ;;; Author: Ali Ismail
+0000                         2          ORG     $0000
+0000  01 0E                  3          AJMP    MAIN
+0002                         4  
+000B                         5          ORG     $000b           ;Location of Timer 0 Interrupt
+000B  02 00 21               6          LJMP    ISR
+000E                         7  MAIN:
+000E  75 A8 82               8          MOV     IE,#082h        ;Enable Interrupts and Timer 0
+0011  75 89 01               9          MOV     TMOD,#01h       ;16-bit timer operating mode
+0014  75 8C DB              10          MOV     TH0,#0dbh       ;Set up timer to count to 9216, 22 times to achieve 2.3 Hz
+0017  75 8A FF              11          MOV     TL0,#0ffh
+001A  78 00                 12          MOV     R0,#0           ;Counter that will count to 22
+001C  75 88 10              13          MOV     TCON,#010h      ;Start Timer 0
+001F                        14  LOOP:
+001F  01 1F                 15          AJMP    LOOP            ;Infinite Loop
+0021                        16  ISR:
+0021  B2 91         1       17          CPL     P1.1            ;Toggle unused port pin each time ISR executes
+0023  08            1       18          INC     R0              ;Increment the counter
+0024  75 8C DB      2       19          MOV     TH0,#0dbh       ;Reset Timer 0 timer
+0027  75 8A FF      2       20          MOV     TL0,#0ffh
+002A  B8 16 04      2       21          CJNE    R0,#016h,DONE   ;Check if the ISR ran 22 times
+002D  B2 92         1       22          CPL     P1.2            ;Toggle port at 2.3 Hz
+002F  78 00         1       23          MOV     R0,#0           ;Clear counter
+0031                        24  DONE:
+0031  B2 91         1       25          CPL     P1.1            ;Toggle unused port pin to low
+0033  32            2       26          RETI
+0034                        27          
+
+************************************TIMER SETUP CALCULATIONS*******************************************************
+11.0592 MHz per Oscillation
+11.0592 MHZ / 12 Oscillations per machine cycle = 921600 Hz for each machine cycle
+
+Scale down:
+0.01 s * 921600 Hz = 9216 ticks for every hundreth of a second
+.217 seconds/.01 = 21.7 times
+
+Thus, I set up the time to count to 9216 ticks before overflowing. After the ISR is run 22 times, then ~.217 seconds have passed, so I toggle the LED port pin P1.2
+************************************ISR RUNTIME CALCULATIONS*******************************************************
+Shortest Time: 
+The shortest time is when the ISR does not have to reset the counter tracking the number of times the ISR has run.
+There are two instructions that do not occur, CPL P1.2 and MOV R0,#0. Not running these instructions saves 2 cycles, which
+gives the following time.
+
+ISR Shortest Run Time
+Machine Cycle Time: 1/11.0592 MHZ * 12 ocillations/cycle = 1.08506 microseconds per machine cycle
+ISR Run Time      : 8 cycles * 1.08506 microseconds = 8.68 microseconds
+
+Note that the time is basically between when the Port pin P1.1 is complimented to when it gets to the second compliment.
+
+Longest Time:
+As discussed earlier, the longest ISR runtime occurs when the ISR resets a counter tracking its executions. These instructions
+introduces 2 more cycles.
+
+ISR Longest Run Time
+Machine Cycle Time: 1/11.0592 MHZ 12 ocillations/cycle = 1.08506 microseconds per machine cycles
+ISR Run Time      : 10 cycles * 1.08506 microseconds = 10.85 microseconds
+
+The time measured at the unused port pin P1.1 was: 10.7 microseconds (screen capture is in this folder). This time is very close to the longest possible time, thus, this time measurement likely occured when the ISR was doing a reset.
+There is only a 0.15 microsecond difference and it is hard to say what this is attributed to. It could be from the clock moving at a higher frequency than anticipated. It could be my cursor measurement
+was slightly off. It is likely from noise in measuring, however, it is very close.

@@ -1,0 +1,2229 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.6.0 #4309 (Jul 28 2006)
+                              4 ; This file generated Fri Dec 12 18:25:13 2014
+                              5 ;--------------------------------------------------------
+                              6 	.module i2c
+                              7 	.optsdcc -mmcs51 --model-large
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _ack_poll
+                             13 	.globl _RST
+                             14 	.globl _CS2
+                             15 	.globl _CS1
+                             16 	.globl _RS
+                             17 	.globl _SDA
+                             18 	.globl _SCL
+                             19 	.globl _CY
+                             20 	.globl _AC
+                             21 	.globl _F0
+                             22 	.globl _RS1
+                             23 	.globl _RS0
+                             24 	.globl _OV
+                             25 	.globl _F1
+                             26 	.globl _P
+                             27 	.globl _PS
+                             28 	.globl _PT1
+                             29 	.globl _PX1
+                             30 	.globl _PT0
+                             31 	.globl _PX0
+                             32 	.globl _RD
+                             33 	.globl _WR
+                             34 	.globl _T1
+                             35 	.globl _T0
+                             36 	.globl _INT1
+                             37 	.globl _INT0
+                             38 	.globl _TXD
+                             39 	.globl _RXD
+                             40 	.globl _P3_7
+                             41 	.globl _P3_6
+                             42 	.globl _P3_5
+                             43 	.globl _P3_4
+                             44 	.globl _P3_3
+                             45 	.globl _P3_2
+                             46 	.globl _P3_1
+                             47 	.globl _P3_0
+                             48 	.globl _EA
+                             49 	.globl _ES
+                             50 	.globl _ET1
+                             51 	.globl _EX1
+                             52 	.globl _ET0
+                             53 	.globl _EX0
+                             54 	.globl _P2_7
+                             55 	.globl _P2_6
+                             56 	.globl _P2_5
+                             57 	.globl _P2_4
+                             58 	.globl _P2_3
+                             59 	.globl _P2_2
+                             60 	.globl _P2_1
+                             61 	.globl _P2_0
+                             62 	.globl _SM0
+                             63 	.globl _SM1
+                             64 	.globl _SM2
+                             65 	.globl _REN
+                             66 	.globl _TB8
+                             67 	.globl _RB8
+                             68 	.globl _TI
+                             69 	.globl _RI
+                             70 	.globl _P1_7
+                             71 	.globl _P1_6
+                             72 	.globl _P1_5
+                             73 	.globl _P1_4
+                             74 	.globl _P1_3
+                             75 	.globl _P1_2
+                             76 	.globl _P1_1
+                             77 	.globl _P1_0
+                             78 	.globl _TF1
+                             79 	.globl _TR1
+                             80 	.globl _TF0
+                             81 	.globl _TR0
+                             82 	.globl _IE1
+                             83 	.globl _IT1
+                             84 	.globl _IE0
+                             85 	.globl _IT0
+                             86 	.globl _P0_7
+                             87 	.globl _P0_6
+                             88 	.globl _P0_5
+                             89 	.globl _P0_4
+                             90 	.globl _P0_3
+                             91 	.globl _P0_2
+                             92 	.globl _P0_1
+                             93 	.globl _P0_0
+                             94 	.globl _TF2
+                             95 	.globl _EXF2
+                             96 	.globl _RCLK
+                             97 	.globl _TCLK
+                             98 	.globl _EXEN2
+                             99 	.globl _TR2
+                            100 	.globl _C_T2
+                            101 	.globl _CP_RL2
+                            102 	.globl _T2CON_7
+                            103 	.globl _T2CON_6
+                            104 	.globl _T2CON_5
+                            105 	.globl _T2CON_4
+                            106 	.globl _T2CON_3
+                            107 	.globl _T2CON_2
+                            108 	.globl _T2CON_1
+                            109 	.globl _T2CON_0
+                            110 	.globl _PT2
+                            111 	.globl _ET2
+                            112 	.globl _TXD0
+                            113 	.globl _RXD0
+                            114 	.globl _BREG_F7
+                            115 	.globl _BREG_F6
+                            116 	.globl _BREG_F5
+                            117 	.globl _BREG_F4
+                            118 	.globl _BREG_F3
+                            119 	.globl _BREG_F2
+                            120 	.globl _BREG_F1
+                            121 	.globl _BREG_F0
+                            122 	.globl _P5_7
+                            123 	.globl _P5_6
+                            124 	.globl _P5_5
+                            125 	.globl _P5_4
+                            126 	.globl _P5_3
+                            127 	.globl _P5_2
+                            128 	.globl _P5_1
+                            129 	.globl _P5_0
+                            130 	.globl _P4_7
+                            131 	.globl _P4_6
+                            132 	.globl _P4_5
+                            133 	.globl _P4_4
+                            134 	.globl _P4_3
+                            135 	.globl _P4_2
+                            136 	.globl _P4_1
+                            137 	.globl _P4_0
+                            138 	.globl _PX0L
+                            139 	.globl _PT0L
+                            140 	.globl _PX1L
+                            141 	.globl _PT1L
+                            142 	.globl _PLS
+                            143 	.globl _PT2L
+                            144 	.globl _PPCL
+                            145 	.globl _EC
+                            146 	.globl _CCF0
+                            147 	.globl _CCF1
+                            148 	.globl _CCF2
+                            149 	.globl _CCF3
+                            150 	.globl _CCF4
+                            151 	.globl _CR
+                            152 	.globl _CF
+                            153 	.globl _B
+                            154 	.globl _ACC
+                            155 	.globl _PSW
+                            156 	.globl _IP
+                            157 	.globl _P3
+                            158 	.globl _IE
+                            159 	.globl _P2
+                            160 	.globl _SBUF
+                            161 	.globl _SCON
+                            162 	.globl _P1
+                            163 	.globl _TH1
+                            164 	.globl _TH0
+                            165 	.globl _TL1
+                            166 	.globl _TL0
+                            167 	.globl _TMOD
+                            168 	.globl _TCON
+                            169 	.globl _PCON
+                            170 	.globl _DPH
+                            171 	.globl _DPL
+                            172 	.globl _SP
+                            173 	.globl _P0
+                            174 	.globl _TH2
+                            175 	.globl _TL2
+                            176 	.globl _RCAP2H
+                            177 	.globl _RCAP2L
+                            178 	.globl _T2CON
+                            179 	.globl _SBUF0
+                            180 	.globl _DP0L
+                            181 	.globl _DP0H
+                            182 	.globl _EECON
+                            183 	.globl _KBF
+                            184 	.globl _KBE
+                            185 	.globl _KBLS
+                            186 	.globl _BRL
+                            187 	.globl _BDRCON
+                            188 	.globl _T2MOD
+                            189 	.globl _SPDAT
+                            190 	.globl _SPSTA
+                            191 	.globl _SPCON
+                            192 	.globl _SADEN
+                            193 	.globl _SADDR
+                            194 	.globl _WDTPRG
+                            195 	.globl _WDTRST
+                            196 	.globl _P5
+                            197 	.globl _P4
+                            198 	.globl _IPH1
+                            199 	.globl _IPL1
+                            200 	.globl _IPH0
+                            201 	.globl _IPL0
+                            202 	.globl _IEN1
+                            203 	.globl _IEN0
+                            204 	.globl _CMOD
+                            205 	.globl _CL
+                            206 	.globl _CH
+                            207 	.globl _CCON
+                            208 	.globl _CCAPM4
+                            209 	.globl _CCAPM3
+                            210 	.globl _CCAPM2
+                            211 	.globl _CCAPM1
+                            212 	.globl _CCAPM0
+                            213 	.globl _CCAP4L
+                            214 	.globl _CCAP3L
+                            215 	.globl _CCAP2L
+                            216 	.globl _CCAP1L
+                            217 	.globl _CCAP0L
+                            218 	.globl _CCAP4H
+                            219 	.globl _CCAP3H
+                            220 	.globl _CCAP2H
+                            221 	.globl _CCAP1H
+                            222 	.globl _CCAP0H
+                            223 	.globl _CKCKON1
+                            224 	.globl _CKCKON0
+                            225 	.globl _CKRL
+                            226 	.globl _AUXR1
+                            227 	.globl _AUXR
+                            228 	.globl _accelbyter_m_PARM_3
+                            229 	.globl _accelbyter_m_PARM_2
+                            230 	.globl _accelbytew_PARM_2
+                            231 	.globl _eebytew_PARM_2
+                            232 	.globl _putchar
+                            233 	.globl _getchar
+                            234 	.globl _get_user_digit
+                            235 	.globl _clear_screen
+                            236 	.globl _basic_error
+                            237 	.globl _start_i2c
+                            238 	.globl _stop_i2c
+                            239 	.globl _ack
+                            240 	.globl _noack
+                            241 	.globl _send
+                            242 	.globl _read
+                            243 	.globl _eebytew
+                            244 	.globl _eebyter
+                            245 	.globl _accelbytew
+                            246 	.globl _accelbyter
+                            247 	.globl _accelbyter_m
+                            248 	.globl _i2c_delay
+                            249 ;--------------------------------------------------------
+                            250 ; special function registers
+                            251 ;--------------------------------------------------------
+                            252 	.area RSEG    (DATA)
+                    008E    253 _AUXR	=	0x008e
+                    00A2    254 _AUXR1	=	0x00a2
+                    0097    255 _CKRL	=	0x0097
+                    008F    256 _CKCKON0	=	0x008f
+                    008F    257 _CKCKON1	=	0x008f
+                    00FA    258 _CCAP0H	=	0x00fa
+                    00FB    259 _CCAP1H	=	0x00fb
+                    00FC    260 _CCAP2H	=	0x00fc
+                    00FD    261 _CCAP3H	=	0x00fd
+                    00FE    262 _CCAP4H	=	0x00fe
+                    00EA    263 _CCAP0L	=	0x00ea
+                    00EB    264 _CCAP1L	=	0x00eb
+                    00EC    265 _CCAP2L	=	0x00ec
+                    00ED    266 _CCAP3L	=	0x00ed
+                    00EE    267 _CCAP4L	=	0x00ee
+                    00DA    268 _CCAPM0	=	0x00da
+                    00DB    269 _CCAPM1	=	0x00db
+                    00DC    270 _CCAPM2	=	0x00dc
+                    00DD    271 _CCAPM3	=	0x00dd
+                    00DE    272 _CCAPM4	=	0x00de
+                    00D8    273 _CCON	=	0x00d8
+                    00F9    274 _CH	=	0x00f9
+                    00E9    275 _CL	=	0x00e9
+                    00D9    276 _CMOD	=	0x00d9
+                    00A8    277 _IEN0	=	0x00a8
+                    00B1    278 _IEN1	=	0x00b1
+                    00B8    279 _IPL0	=	0x00b8
+                    00B7    280 _IPH0	=	0x00b7
+                    00B2    281 _IPL1	=	0x00b2
+                    00B3    282 _IPH1	=	0x00b3
+                    00C0    283 _P4	=	0x00c0
+                    00D8    284 _P5	=	0x00d8
+                    00A6    285 _WDTRST	=	0x00a6
+                    00A7    286 _WDTPRG	=	0x00a7
+                    00A9    287 _SADDR	=	0x00a9
+                    00B9    288 _SADEN	=	0x00b9
+                    00C3    289 _SPCON	=	0x00c3
+                    00C4    290 _SPSTA	=	0x00c4
+                    00C5    291 _SPDAT	=	0x00c5
+                    00C9    292 _T2MOD	=	0x00c9
+                    009B    293 _BDRCON	=	0x009b
+                    009A    294 _BRL	=	0x009a
+                    009C    295 _KBLS	=	0x009c
+                    009D    296 _KBE	=	0x009d
+                    009E    297 _KBF	=	0x009e
+                    00D2    298 _EECON	=	0x00d2
+                    0083    299 _DP0H	=	0x0083
+                    0082    300 _DP0L	=	0x0082
+                    0099    301 _SBUF0	=	0x0099
+                    00C8    302 _T2CON	=	0x00c8
+                    00CA    303 _RCAP2L	=	0x00ca
+                    00CB    304 _RCAP2H	=	0x00cb
+                    00CC    305 _TL2	=	0x00cc
+                    00CD    306 _TH2	=	0x00cd
+                    0080    307 _P0	=	0x0080
+                    0081    308 _SP	=	0x0081
+                    0082    309 _DPL	=	0x0082
+                    0083    310 _DPH	=	0x0083
+                    0087    311 _PCON	=	0x0087
+                    0088    312 _TCON	=	0x0088
+                    0089    313 _TMOD	=	0x0089
+                    008A    314 _TL0	=	0x008a
+                    008B    315 _TL1	=	0x008b
+                    008C    316 _TH0	=	0x008c
+                    008D    317 _TH1	=	0x008d
+                    0090    318 _P1	=	0x0090
+                    0098    319 _SCON	=	0x0098
+                    0099    320 _SBUF	=	0x0099
+                    00A0    321 _P2	=	0x00a0
+                    00A8    322 _IE	=	0x00a8
+                    00B0    323 _P3	=	0x00b0
+                    00B8    324 _IP	=	0x00b8
+                    00D0    325 _PSW	=	0x00d0
+                    00E0    326 _ACC	=	0x00e0
+                    00F0    327 _B	=	0x00f0
+                            328 ;--------------------------------------------------------
+                            329 ; special function bits
+                            330 ;--------------------------------------------------------
+                            331 	.area RSEG    (DATA)
+                    00DF    332 _CF	=	0x00df
+                    00DE    333 _CR	=	0x00de
+                    00DC    334 _CCF4	=	0x00dc
+                    00DB    335 _CCF3	=	0x00db
+                    00DA    336 _CCF2	=	0x00da
+                    00D9    337 _CCF1	=	0x00d9
+                    00D8    338 _CCF0	=	0x00d8
+                    00AE    339 _EC	=	0x00ae
+                    00BE    340 _PPCL	=	0x00be
+                    00BD    341 _PT2L	=	0x00bd
+                    00BC    342 _PLS	=	0x00bc
+                    00BB    343 _PT1L	=	0x00bb
+                    00BA    344 _PX1L	=	0x00ba
+                    00B9    345 _PT0L	=	0x00b9
+                    00B8    346 _PX0L	=	0x00b8
+                    00C0    347 _P4_0	=	0x00c0
+                    00C1    348 _P4_1	=	0x00c1
+                    00C2    349 _P4_2	=	0x00c2
+                    00C3    350 _P4_3	=	0x00c3
+                    00C4    351 _P4_4	=	0x00c4
+                    00C5    352 _P4_5	=	0x00c5
+                    00C6    353 _P4_6	=	0x00c6
+                    00C7    354 _P4_7	=	0x00c7
+                    00D8    355 _P5_0	=	0x00d8
+                    00D9    356 _P5_1	=	0x00d9
+                    00DA    357 _P5_2	=	0x00da
+                    00DB    358 _P5_3	=	0x00db
+                    00DC    359 _P5_4	=	0x00dc
+                    00DD    360 _P5_5	=	0x00dd
+                    00DE    361 _P5_6	=	0x00de
+                    00DF    362 _P5_7	=	0x00df
+                    00F0    363 _BREG_F0	=	0x00f0
+                    00F1    364 _BREG_F1	=	0x00f1
+                    00F2    365 _BREG_F2	=	0x00f2
+                    00F3    366 _BREG_F3	=	0x00f3
+                    00F4    367 _BREG_F4	=	0x00f4
+                    00F5    368 _BREG_F5	=	0x00f5
+                    00F6    369 _BREG_F6	=	0x00f6
+                    00F7    370 _BREG_F7	=	0x00f7
+                    00B0    371 _RXD0	=	0x00b0
+                    00B1    372 _TXD0	=	0x00b1
+                    00AD    373 _ET2	=	0x00ad
+                    00BD    374 _PT2	=	0x00bd
+                    00C8    375 _T2CON_0	=	0x00c8
+                    00C9    376 _T2CON_1	=	0x00c9
+                    00CA    377 _T2CON_2	=	0x00ca
+                    00CB    378 _T2CON_3	=	0x00cb
+                    00CC    379 _T2CON_4	=	0x00cc
+                    00CD    380 _T2CON_5	=	0x00cd
+                    00CE    381 _T2CON_6	=	0x00ce
+                    00CF    382 _T2CON_7	=	0x00cf
+                    00C8    383 _CP_RL2	=	0x00c8
+                    00C9    384 _C_T2	=	0x00c9
+                    00CA    385 _TR2	=	0x00ca
+                    00CB    386 _EXEN2	=	0x00cb
+                    00CC    387 _TCLK	=	0x00cc
+                    00CD    388 _RCLK	=	0x00cd
+                    00CE    389 _EXF2	=	0x00ce
+                    00CF    390 _TF2	=	0x00cf
+                    0080    391 _P0_0	=	0x0080
+                    0081    392 _P0_1	=	0x0081
+                    0082    393 _P0_2	=	0x0082
+                    0083    394 _P0_3	=	0x0083
+                    0084    395 _P0_4	=	0x0084
+                    0085    396 _P0_5	=	0x0085
+                    0086    397 _P0_6	=	0x0086
+                    0087    398 _P0_7	=	0x0087
+                    0088    399 _IT0	=	0x0088
+                    0089    400 _IE0	=	0x0089
+                    008A    401 _IT1	=	0x008a
+                    008B    402 _IE1	=	0x008b
+                    008C    403 _TR0	=	0x008c
+                    008D    404 _TF0	=	0x008d
+                    008E    405 _TR1	=	0x008e
+                    008F    406 _TF1	=	0x008f
+                    0090    407 _P1_0	=	0x0090
+                    0091    408 _P1_1	=	0x0091
+                    0092    409 _P1_2	=	0x0092
+                    0093    410 _P1_3	=	0x0093
+                    0094    411 _P1_4	=	0x0094
+                    0095    412 _P1_5	=	0x0095
+                    0096    413 _P1_6	=	0x0096
+                    0097    414 _P1_7	=	0x0097
+                    0098    415 _RI	=	0x0098
+                    0099    416 _TI	=	0x0099
+                    009A    417 _RB8	=	0x009a
+                    009B    418 _TB8	=	0x009b
+                    009C    419 _REN	=	0x009c
+                    009D    420 _SM2	=	0x009d
+                    009E    421 _SM1	=	0x009e
+                    009F    422 _SM0	=	0x009f
+                    00A0    423 _P2_0	=	0x00a0
+                    00A1    424 _P2_1	=	0x00a1
+                    00A2    425 _P2_2	=	0x00a2
+                    00A3    426 _P2_3	=	0x00a3
+                    00A4    427 _P2_4	=	0x00a4
+                    00A5    428 _P2_5	=	0x00a5
+                    00A6    429 _P2_6	=	0x00a6
+                    00A7    430 _P2_7	=	0x00a7
+                    00A8    431 _EX0	=	0x00a8
+                    00A9    432 _ET0	=	0x00a9
+                    00AA    433 _EX1	=	0x00aa
+                    00AB    434 _ET1	=	0x00ab
+                    00AC    435 _ES	=	0x00ac
+                    00AF    436 _EA	=	0x00af
+                    00B0    437 _P3_0	=	0x00b0
+                    00B1    438 _P3_1	=	0x00b1
+                    00B2    439 _P3_2	=	0x00b2
+                    00B3    440 _P3_3	=	0x00b3
+                    00B4    441 _P3_4	=	0x00b4
+                    00B5    442 _P3_5	=	0x00b5
+                    00B6    443 _P3_6	=	0x00b6
+                    00B7    444 _P3_7	=	0x00b7
+                    00B0    445 _RXD	=	0x00b0
+                    00B1    446 _TXD	=	0x00b1
+                    00B2    447 _INT0	=	0x00b2
+                    00B3    448 _INT1	=	0x00b3
+                    00B4    449 _T0	=	0x00b4
+                    00B5    450 _T1	=	0x00b5
+                    00B6    451 _WR	=	0x00b6
+                    00B7    452 _RD	=	0x00b7
+                    00B8    453 _PX0	=	0x00b8
+                    00B9    454 _PT0	=	0x00b9
+                    00BA    455 _PX1	=	0x00ba
+                    00BB    456 _PT1	=	0x00bb
+                    00BC    457 _PS	=	0x00bc
+                    00D0    458 _P	=	0x00d0
+                    00D1    459 _F1	=	0x00d1
+                    00D2    460 _OV	=	0x00d2
+                    00D3    461 _RS0	=	0x00d3
+                    00D4    462 _RS1	=	0x00d4
+                    00D5    463 _F0	=	0x00d5
+                    00D6    464 _AC	=	0x00d6
+                    00D7    465 _CY	=	0x00d7
+                    0094    466 _SCL	=	0x0094
+                    0095    467 _SDA	=	0x0095
+                    0093    468 _RS	=	0x0093
+                    0091    469 _CS1	=	0x0091
+                    0090    470 _CS2	=	0x0090
+                    0096    471 _RST	=	0x0096
+                            472 ;--------------------------------------------------------
+                            473 ; overlayable register banks
+                            474 ;--------------------------------------------------------
+                            475 	.area REG_BANK_0	(REL,OVR,DATA)
+   0000                     476 	.ds 8
+                            477 ;--------------------------------------------------------
+                            478 ; internal ram data
+                            479 ;--------------------------------------------------------
+                            480 	.area DSEG    (DATA)
+                            481 ;--------------------------------------------------------
+                            482 ; overlayable items in internal ram 
+                            483 ;--------------------------------------------------------
+                            484 	.area OSEG    (OVR,DATA)
+                            485 ;--------------------------------------------------------
+                            486 ; indirectly addressable internal ram data
+                            487 ;--------------------------------------------------------
+                            488 	.area ISEG    (DATA)
+                            489 ;--------------------------------------------------------
+                            490 ; bit data
+                            491 ;--------------------------------------------------------
+                            492 	.area BSEG    (BIT)
+                            493 ;--------------------------------------------------------
+                            494 ; paged external ram data
+                            495 ;--------------------------------------------------------
+                            496 	.area PSEG    (PAG,XDATA)
+                            497 ;--------------------------------------------------------
+                            498 ; external ram data
+                            499 ;--------------------------------------------------------
+                            500 	.area XSEG    (XDATA)
+   0000                     501 _putchar_c_1_1:
+   0000                     502 	.ds 1
+   0001                     503 _get_user_digit_read_cr_1_1:
+   0001                     504 	.ds 1
+   0002                     505 _get_user_digit_read_char_1_1:
+   0002                     506 	.ds 1
+   0003                     507 _basic_error_error_message_1_1:
+   0003                     508 	.ds 3
+   0006                     509 _send_data_in_1_1:
+   0006                     510 	.ds 1
+   0007                     511 _read_temp_1_1:
+   0007                     512 	.ds 1
+   0008                     513 _eebytew_PARM_2:
+   0008                     514 	.ds 1
+   0009                     515 _eebytew_addr_1_1:
+   0009                     516 	.ds 2
+   000B                     517 _eebyter_addr_1_1:
+   000B                     518 	.ds 2
+   000D                     519 _accelbytew_PARM_2:
+   000D                     520 	.ds 1
+   000E                     521 _accelbytew_addr_1_1:
+   000E                     522 	.ds 2
+   0010                     523 _accelbyter_addr_1_1:
+   0010                     524 	.ds 2
+   0012                     525 _accelbyter_m_PARM_2:
+   0012                     526 	.ds 3
+   0015                     527 _accelbyter_m_PARM_3:
+   0015                     528 	.ds 3
+   0018                     529 _accelbyter_m_addr_1_1:
+   0018                     530 	.ds 2
+                            531 ;--------------------------------------------------------
+                            532 ; external initialized ram data
+                            533 ;--------------------------------------------------------
+                            534 	.area XISEG   (XDATA)
+                            535 	.area HOME    (CODE)
+                            536 	.area GSINIT0 (CODE)
+                            537 	.area GSINIT1 (CODE)
+                            538 	.area GSINIT2 (CODE)
+                            539 	.area GSINIT3 (CODE)
+                            540 	.area GSINIT4 (CODE)
+                            541 	.area GSINIT5 (CODE)
+                            542 	.area GSINIT  (CODE)
+                            543 	.area GSFINAL (CODE)
+                            544 	.area CSEG    (CODE)
+                            545 ;--------------------------------------------------------
+                            546 ; global & static initialisations
+                            547 ;--------------------------------------------------------
+                            548 	.area HOME    (CODE)
+                            549 	.area GSINIT  (CODE)
+                            550 	.area GSFINAL (CODE)
+                            551 	.area GSINIT  (CODE)
+                            552 ;--------------------------------------------------------
+                            553 ; Home
+                            554 ;--------------------------------------------------------
+                            555 	.area HOME    (CODE)
+                            556 	.area CSEG    (CODE)
+                            557 ;--------------------------------------------------------
+                            558 ; code
+                            559 ;--------------------------------------------------------
+                            560 	.area CSEG    (CODE)
+                            561 ;------------------------------------------------------------
+                            562 ;Allocation info for local variables in function 'putchar'
+                            563 ;------------------------------------------------------------
+                            564 ;c                         Allocated with name '_putchar_c_1_1'
+                            565 ;------------------------------------------------------------
+                            566 ;	terminal_comm.c:15: void putchar (char c)
+                            567 ;	-----------------------------------------
+                            568 ;	 function putchar
+                            569 ;	-----------------------------------------
+   0000                     570 _putchar:
+                    0002    571 	ar2 = 0x02
+                    0003    572 	ar3 = 0x03
+                    0004    573 	ar4 = 0x04
+                    0005    574 	ar5 = 0x05
+                    0006    575 	ar6 = 0x06
+                    0007    576 	ar7 = 0x07
+                    0000    577 	ar0 = 0x00
+                    0001    578 	ar1 = 0x01
+                            579 ;	genReceive
+   0000 E5 82               580 	mov	a,dpl
+   0002 90s00r00            581 	mov	dptr,#_putchar_c_1_1
+   0005 F0                  582 	movx	@dptr,a
+                            583 ;	terminal_comm.c:17: while (TI == 0);        // wait for TX ready, spin on TI
+   0006                     584 00101$:
+                            585 ;	genIfx
+                            586 ;	genIfxJump
+                            587 ;	Peephole 108.d	removed ljmp by inverse jump logic
+   0006 30 99 FD            588 	jnb	_TI,00101$
+                            589 ;	Peephole 300	removed redundant label 00108$
+                            590 ;	terminal_comm.c:18: SBUF = c;  	            // load serial port with transmit value
+                            591 ;	genAssign
+   0009 90s00r00            592 	mov	dptr,#_putchar_c_1_1
+   000C E0                  593 	movx	a,@dptr
+   000D F5 99               594 	mov	_SBUF,a
+                            595 ;	terminal_comm.c:19: TI = 0;  	            // clear TI flag
+                            596 ;	genAssign
+   000F C2 99               597 	clr	_TI
+                            598 ;	Peephole 300	removed redundant label 00104$
+   0011 22                  599 	ret
+                            600 ;------------------------------------------------------------
+                            601 ;Allocation info for local variables in function 'getchar'
+                            602 ;------------------------------------------------------------
+                            603 ;------------------------------------------------------------
+                            604 ;	terminal_comm.c:24: char getchar ()
+                            605 ;	-----------------------------------------
+                            606 ;	 function getchar
+                            607 ;	-----------------------------------------
+   0012                     608 _getchar:
+                            609 ;	terminal_comm.c:27: while (!RI);    // wait for character to be received, spin on RI
+   0012                     610 00101$:
+                            611 ;	genIfx
+                            612 ;	genIfxJump
+                            613 ;	Peephole 108.d	removed ljmp by inverse jump logic
+                            614 ;	terminal_comm.c:28: RI = 0;			// clear RI flag
+                            615 ;	genAssign
+                            616 ;	Peephole 250.a	using atomic test and clear
+   0012 10 98 02            617 	jbc	_RI,00108$
+   0015 80 FB               618 	sjmp	00101$
+   0017                     619 00108$:
+                            620 ;	terminal_comm.c:29: return SBUF;  	// return character from SBUF
+                            621 ;	genAssign
+   0017 AA 99               622 	mov	r2,_SBUF
+                            623 ;	genRet
+   0019 8A 82               624 	mov	dpl,r2
+                            625 ;	Peephole 300	removed redundant label 00104$
+   001B 22                  626 	ret
+                            627 ;------------------------------------------------------------
+                            628 ;Allocation info for local variables in function 'get_user_digit'
+                            629 ;------------------------------------------------------------
+                            630 ;read_cr                   Allocated with name '_get_user_digit_read_cr_1_1'
+                            631 ;read_char                 Allocated with name '_get_user_digit_read_char_1_1'
+                            632 ;------------------------------------------------------------
+                            633 ;	terminal_comm.c:37: unsigned char get_user_digit()
+                            634 ;	-----------------------------------------
+                            635 ;	 function get_user_digit
+                            636 ;	-----------------------------------------
+   001C                     637 _get_user_digit:
+                            638 ;	terminal_comm.c:42: unsigned char read_char = 'a';
+                            639 ;	genAssign
+   001C 90s00r02            640 	mov	dptr,#_get_user_digit_read_char_1_1
+   001F 74 61               641 	mov	a,#0x61
+   0021 F0                  642 	movx	@dptr,a
+                            643 ;	terminal_comm.c:44: while(!isdigit(read_char) || read_char < '1' || read_char > '6')
+   0022                     644 00112$:
+                            645 ;	genAssign
+   0022 90s00r02            646 	mov	dptr,#_get_user_digit_read_char_1_1
+   0025 E0                  647 	movx	a,@dptr
+                            648 ;	genCall
+   0026 FA                  649 	mov	r2,a
+                            650 ;	Peephole 244.c	loading dpl from a instead of r2
+   0027 F5 82               651 	mov	dpl,a
+   0029 C0 02               652 	push	ar2
+   002B 12s00r00            653 	lcall	_isdigit
+   002E E5 82               654 	mov	a,dpl
+   0030 D0 02               655 	pop	ar2
+                            656 ;	genIfx
+                            657 ;	genIfxJump
+                            658 ;	Peephole 108.c	removed ljmp by inverse jump logic
+   0032 60 0D               659 	jz	00113$
+                            660 ;	Peephole 300	removed redundant label 00125$
+                            661 ;	genCmpLt
+                            662 ;	genCmp
+   0034 BA 31 00            663 	cjne	r2,#0x31,00126$
+   0037                     664 00126$:
+                            665 ;	genIfxJump
+                            666 ;	Peephole 112.b	changed ljmp to sjmp
+                            667 ;	Peephole 160.a	removed sjmp by inverse jump logic
+   0037 40 08               668 	jc	00113$
+                            669 ;	Peephole 300	removed redundant label 00127$
+                            670 ;	genCmpGt
+                            671 ;	genCmp
+                            672 ;	genIfxJump
+                            673 ;	Peephole 132.c	optimized genCmpGt by inverse logic (acc differs)
+   0039 EA                  674 	mov	a,r2
+   003A 24 C9               675 	add	a,#0xff - 0x36
+   003C 40 03               676 	jc	00128$
+   003E 02s00rFE            677 	ljmp	00114$
+   0041                     678 00128$:
+   0041                     679 00113$:
+                            680 ;	terminal_comm.c:47: read_char = getchar();
+                            681 ;	genCall
+   0041 12s00r12            682 	lcall	_getchar
+   0044 AB 82               683 	mov	r3,dpl
+                            684 ;	genAssign
+   0046 90s00r02            685 	mov	dptr,#_get_user_digit_read_char_1_1
+   0049 EB                  686 	mov	a,r3
+   004A F0                  687 	movx	@dptr,a
+                            688 ;	terminal_comm.c:50: printf("%c",read_char);
+                            689 ;	genAssign
+                            690 ;	genCast
+   004B 7C 00               691 	mov	r4,#0x00
+                            692 ;	genIpush
+   004D C0 03               693 	push	ar3
+   004F C0 04               694 	push	ar4
+                            695 ;	genIpush
+   0051 74r00               696 	mov	a,#__str_0
+   0053 C0 E0               697 	push	acc
+   0055 74s00               698 	mov	a,#(__str_0 >> 8)
+   0057 C0 E0               699 	push	acc
+   0059 74 80               700 	mov	a,#0x80
+   005B C0 E0               701 	push	acc
+                            702 ;	genCall
+   005D 12s00r00            703 	lcall	_printf
+   0060 E5 81               704 	mov	a,sp
+   0062 24 FB               705 	add	a,#0xfb
+   0064 F5 81               706 	mov	sp,a
+                            707 ;	terminal_comm.c:53: read_cr = getchar();
+                            708 ;	genCall
+   0066 12s00r12            709 	lcall	_getchar
+   0069 E5 82               710 	mov	a,dpl
+                            711 ;	genAssign
+   006B 90s00r01            712 	mov	dptr,#_get_user_digit_read_cr_1_1
+   006E F0                  713 	movx	@dptr,a
+                            714 ;	terminal_comm.c:56: while(read_cr != CR)
+   006F                     715 00103$:
+                            716 ;	genAssign
+   006F 90s00r01            717 	mov	dptr,#_get_user_digit_read_cr_1_1
+   0072 E0                  718 	movx	a,@dptr
+   0073 FB                  719 	mov	r3,a
+                            720 ;	genCmpEq
+                            721 ;	gencjneshort
+   0074 BB 0D 02            722 	cjne	r3,#0x0D,00129$
+                            723 ;	Peephole 112.b	changed ljmp to sjmp
+   0077 80 4E               724 	sjmp	00105$
+   0079                     725 00129$:
+                            726 ;	terminal_comm.c:59: if(read_cr == BS)
+                            727 ;	genCmpEq
+                            728 ;	gencjneshort
+                            729 ;	Peephole 112.b	changed ljmp to sjmp
+                            730 ;	Peephole 198.b	optimized misc jump sequence
+   0079 BB 08 40            731 	cjne	r3,#0x08,00102$
+                            732 ;	Peephole 200.b	removed redundant sjmp
+                            733 ;	Peephole 300	removed redundant label 00130$
+                            734 ;	Peephole 300	removed redundant label 00131$
+                            735 ;	terminal_comm.c:61: printf("%c",read_cr);
+                            736 ;	genCast
+   007C 7C 00               737 	mov	r4,#0x00
+                            738 ;	genIpush
+   007E C0 03               739 	push	ar3
+   0080 C0 04               740 	push	ar4
+                            741 ;	genIpush
+   0082 74r00               742 	mov	a,#__str_0
+   0084 C0 E0               743 	push	acc
+   0086 74s00               744 	mov	a,#(__str_0 >> 8)
+   0088 C0 E0               745 	push	acc
+   008A 74 80               746 	mov	a,#0x80
+   008C C0 E0               747 	push	acc
+                            748 ;	genCall
+   008E 12s00r00            749 	lcall	_printf
+   0091 E5 81               750 	mov	a,sp
+   0093 24 FB               751 	add	a,#0xfb
+   0095 F5 81               752 	mov	sp,a
+                            753 ;	terminal_comm.c:63: read_char = getchar();
+                            754 ;	genCall
+   0097 12s00r12            755 	lcall	_getchar
+   009A AB 82               756 	mov	r3,dpl
+                            757 ;	genAssign
+   009C 90s00r02            758 	mov	dptr,#_get_user_digit_read_char_1_1
+   009F EB                  759 	mov	a,r3
+   00A0 F0                  760 	movx	@dptr,a
+                            761 ;	terminal_comm.c:64: printf("%c",read_char);
+                            762 ;	genAssign
+                            763 ;	genCast
+   00A1 7C 00               764 	mov	r4,#0x00
+                            765 ;	genIpush
+   00A3 C0 03               766 	push	ar3
+   00A5 C0 04               767 	push	ar4
+                            768 ;	genIpush
+   00A7 74r00               769 	mov	a,#__str_0
+   00A9 C0 E0               770 	push	acc
+   00AB 74s00               771 	mov	a,#(__str_0 >> 8)
+   00AD C0 E0               772 	push	acc
+   00AF 74 80               773 	mov	a,#0x80
+   00B1 C0 E0               774 	push	acc
+                            775 ;	genCall
+   00B3 12s00r00            776 	lcall	_printf
+   00B6 E5 81               777 	mov	a,sp
+   00B8 24 FB               778 	add	a,#0xfb
+   00BA F5 81               779 	mov	sp,a
+   00BC                     780 00102$:
+                            781 ;	terminal_comm.c:66: read_cr = getchar();
+                            782 ;	genCall
+   00BC 12s00r12            783 	lcall	_getchar
+   00BF E5 82               784 	mov	a,dpl
+                            785 ;	genAssign
+   00C1 90s00r01            786 	mov	dptr,#_get_user_digit_read_cr_1_1
+   00C4 F0                  787 	movx	@dptr,a
+                            788 ;	Peephole 112.b	changed ljmp to sjmp
+   00C5 80 A8               789 	sjmp	00103$
+   00C7                     790 00105$:
+                            791 ;	terminal_comm.c:69: if(!isdigit(read_char) || read_char < '1' || read_char > '6')
+                            792 ;	genAssign
+   00C7 90s00r02            793 	mov	dptr,#_get_user_digit_read_char_1_1
+   00CA E0                  794 	movx	a,@dptr
+                            795 ;	genCall
+   00CB FB                  796 	mov	r3,a
+                            797 ;	Peephole 244.c	loading dpl from a instead of r3
+   00CC F5 82               798 	mov	dpl,a
+   00CE C0 03               799 	push	ar3
+   00D0 12s00r00            800 	lcall	_isdigit
+   00D3 E5 82               801 	mov	a,dpl
+   00D5 D0 03               802 	pop	ar3
+                            803 ;	genIfx
+                            804 ;	genIfxJump
+                            805 ;	Peephole 108.c	removed ljmp by inverse jump logic
+   00D7 60 0D               806 	jz	00106$
+                            807 ;	Peephole 300	removed redundant label 00132$
+                            808 ;	genCmpLt
+                            809 ;	genCmp
+   00D9 BB 31 00            810 	cjne	r3,#0x31,00133$
+   00DC                     811 00133$:
+                            812 ;	genIfxJump
+                            813 ;	Peephole 112.b	changed ljmp to sjmp
+                            814 ;	Peephole 160.a	removed sjmp by inverse jump logic
+   00DC 40 08               815 	jc	00106$
+                            816 ;	Peephole 300	removed redundant label 00134$
+                            817 ;	genCmpGt
+                            818 ;	genCmp
+                            819 ;	genIfxJump
+                            820 ;	Peephole 132.c	optimized genCmpGt by inverse logic (acc differs)
+   00DE EB                  821 	mov	a,r3
+   00DF 24 C9               822 	add	a,#0xff - 0x36
+   00E1 40 03               823 	jc	00135$
+   00E3 02s00r22            824 	ljmp	00112$
+   00E6                     825 00135$:
+   00E6                     826 00106$:
+                            827 ;	terminal_comm.c:70: printf("\n\rPlease enter a valid choice 1-6.\n\r");
+                            828 ;	genIpush
+   00E6 74r03               829 	mov	a,#__str_1
+   00E8 C0 E0               830 	push	acc
+   00EA 74s00               831 	mov	a,#(__str_1 >> 8)
+   00EC C0 E0               832 	push	acc
+   00EE 74 80               833 	mov	a,#0x80
+   00F0 C0 E0               834 	push	acc
+                            835 ;	genCall
+   00F2 12s00r00            836 	lcall	_printf
+   00F5 15 81               837 	dec	sp
+   00F7 15 81               838 	dec	sp
+   00F9 15 81               839 	dec	sp
+   00FB 02s00r22            840 	ljmp	00112$
+   00FE                     841 00114$:
+                            842 ;	terminal_comm.c:72: return read_char;
+                            843 ;	genRet
+   00FE 8A 82               844 	mov	dpl,r2
+                            845 ;	Peephole 300	removed redundant label 00115$
+   0100 22                  846 	ret
+                            847 ;------------------------------------------------------------
+                            848 ;Allocation info for local variables in function 'clear_screen'
+                            849 ;------------------------------------------------------------
+                            850 ;------------------------------------------------------------
+                            851 ;	terminal_comm.c:77: void clear_screen()
+                            852 ;	-----------------------------------------
+                            853 ;	 function clear_screen
+                            854 ;	-----------------------------------------
+   0101                     855 _clear_screen:
+                            856 ;	terminal_comm.c:81: printf("\033[2J");
+                            857 ;	genIpush
+   0101 74r28               858 	mov	a,#__str_2
+   0103 C0 E0               859 	push	acc
+   0105 74s00               860 	mov	a,#(__str_2 >> 8)
+   0107 C0 E0               861 	push	acc
+   0109 74 80               862 	mov	a,#0x80
+   010B C0 E0               863 	push	acc
+                            864 ;	genCall
+   010D 12s00r00            865 	lcall	_printf
+   0110 15 81               866 	dec	sp
+   0112 15 81               867 	dec	sp
+   0114 15 81               868 	dec	sp
+                            869 ;	terminal_comm.c:82: printf("\033[0;0H");
+                            870 ;	genIpush
+   0116 74r2D               871 	mov	a,#__str_3
+   0118 C0 E0               872 	push	acc
+   011A 74s00               873 	mov	a,#(__str_3 >> 8)
+   011C C0 E0               874 	push	acc
+   011E 74 80               875 	mov	a,#0x80
+   0120 C0 E0               876 	push	acc
+                            877 ;	genCall
+   0122 12s00r00            878 	lcall	_printf
+   0125 15 81               879 	dec	sp
+   0127 15 81               880 	dec	sp
+   0129 15 81               881 	dec	sp
+                            882 ;	Peephole 300	removed redundant label 00101$
+   012B 22                  883 	ret
+                            884 ;------------------------------------------------------------
+                            885 ;Allocation info for local variables in function 'basic_error'
+                            886 ;------------------------------------------------------------
+                            887 ;error_message             Allocated with name '_basic_error_error_message_1_1'
+                            888 ;------------------------------------------------------------
+                            889 ;	terminal_comm.c:87: void basic_error(unsigned char *error_message)
+                            890 ;	-----------------------------------------
+                            891 ;	 function basic_error
+                            892 ;	-----------------------------------------
+   012C                     893 _basic_error:
+                            894 ;	genReceive
+   012C AA F0               895 	mov	r2,b
+   012E AB 83               896 	mov	r3,dph
+   0130 E5 82               897 	mov	a,dpl
+   0132 90s00r03            898 	mov	dptr,#_basic_error_error_message_1_1
+   0135 F0                  899 	movx	@dptr,a
+   0136 A3                  900 	inc	dptr
+   0137 EB                  901 	mov	a,r3
+   0138 F0                  902 	movx	@dptr,a
+   0139 A3                  903 	inc	dptr
+   013A EA                  904 	mov	a,r2
+   013B F0                  905 	movx	@dptr,a
+                            906 ;	terminal_comm.c:89: clear_screen();
+                            907 ;	genCall
+   013C 12s01r01            908 	lcall	_clear_screen
+                            909 ;	terminal_comm.c:90: printf(error_message);
+                            910 ;	genIpush
+   013F 90s00r03            911 	mov	dptr,#_basic_error_error_message_1_1
+   0142 E0                  912 	movx	a,@dptr
+   0143 C0 E0               913 	push	acc
+   0145 A3                  914 	inc	dptr
+   0146 E0                  915 	movx	a,@dptr
+   0147 C0 E0               916 	push	acc
+   0149 A3                  917 	inc	dptr
+   014A E0                  918 	movx	a,@dptr
+   014B C0 E0               919 	push	acc
+                            920 ;	genCall
+   014D 12s00r00            921 	lcall	_printf
+   0150 15 81               922 	dec	sp
+   0152 15 81               923 	dec	sp
+   0154 15 81               924 	dec	sp
+                            925 ;	terminal_comm.c:91: printf("Press enter to quit...\n\r");
+                            926 ;	genIpush
+   0156 74r34               927 	mov	a,#__str_4
+   0158 C0 E0               928 	push	acc
+   015A 74s00               929 	mov	a,#(__str_4 >> 8)
+   015C C0 E0               930 	push	acc
+   015E 74 80               931 	mov	a,#0x80
+   0160 C0 E0               932 	push	acc
+                            933 ;	genCall
+   0162 12s00r00            934 	lcall	_printf
+   0165 15 81               935 	dec	sp
+   0167 15 81               936 	dec	sp
+   0169 15 81               937 	dec	sp
+                            938 ;	terminal_comm.c:93: while(getchar() != CR);
+   016B                     939 00101$:
+                            940 ;	genCall
+   016B 12s00r12            941 	lcall	_getchar
+   016E AA 82               942 	mov	r2,dpl
+                            943 ;	genCmpEq
+                            944 ;	gencjneshort
+                            945 ;	Peephole 112.b	changed ljmp to sjmp
+                            946 ;	Peephole 198.b	optimized misc jump sequence
+   0170 BA 0D F8            947 	cjne	r2,#0x0D,00101$
+                            948 ;	Peephole 200.b	removed redundant sjmp
+                            949 ;	Peephole 300	removed redundant label 00107$
+                            950 ;	Peephole 300	removed redundant label 00108$
+                            951 ;	Peephole 300	removed redundant label 00104$
+   0173 22                  952 	ret
+                            953 ;------------------------------------------------------------
+                            954 ;Allocation info for local variables in function 'start_i2c'
+                            955 ;------------------------------------------------------------
+                            956 ;------------------------------------------------------------
+                            957 ;	i2c.c:12: void start_i2c()
+                            958 ;	-----------------------------------------
+                            959 ;	 function start_i2c
+                            960 ;	-----------------------------------------
+   0174                     961 _start_i2c:
+                            962 ;	i2c.c:16: SDA = 1;
+                            963 ;	genAssign
+   0174 D2 95               964 	setb	_SDA
+                            965 ;	i2c.c:17: SCL = 1;
+                            966 ;	genAssign
+   0176 D2 94               967 	setb	_SCL
+                            968 ;	i2c.c:18: i2c_delay();
+                            969 ;	genCall
+   0178 12s05r6E            970 	lcall	_i2c_delay
+                            971 ;	i2c.c:19: SDA = 0;
+                            972 ;	genAssign
+   017B C2 95               973 	clr	_SDA
+                            974 ;	i2c.c:20: i2c_delay();
+                            975 ;	genCall
+                            976 ;	Peephole 253.b	replaced lcall/ret with ljmp
+   017D 02s05r6E            977 	ljmp	_i2c_delay
+                            978 ;
+                            979 ;------------------------------------------------------------
+                            980 ;Allocation info for local variables in function 'stop_i2c'
+                            981 ;------------------------------------------------------------
+                            982 ;------------------------------------------------------------
+                            983 ;	i2c.c:27: void stop_i2c()
+                            984 ;	-----------------------------------------
+                            985 ;	 function stop_i2c
+                            986 ;	-----------------------------------------
+   0180                     987 _stop_i2c:
+                            988 ;	i2c.c:31: SDA = 0;
+                            989 ;	genAssign
+   0180 C2 95               990 	clr	_SDA
+                            991 ;	i2c.c:32: SCL = 1;
+                            992 ;	genAssign
+   0182 D2 94               993 	setb	_SCL
+                            994 ;	i2c.c:33: i2c_delay();
+                            995 ;	genCall
+   0184 12s05r6E            996 	lcall	_i2c_delay
+                            997 ;	i2c.c:34: SDA = 1;
+                            998 ;	genAssign
+   0187 D2 95               999 	setb	_SDA
+                           1000 ;	i2c.c:35: i2c_delay();
+                           1001 ;	genCall
+                           1002 ;	Peephole 253.b	replaced lcall/ret with ljmp
+   0189 02s05r6E           1003 	ljmp	_i2c_delay
+                           1004 ;
+                           1005 ;------------------------------------------------------------
+                           1006 ;Allocation info for local variables in function 'ack'
+                           1007 ;------------------------------------------------------------
+                           1008 ;------------------------------------------------------------
+                           1009 ;	i2c.c:41: void ack()
+                           1010 ;	-----------------------------------------
+                           1011 ;	 function ack
+                           1012 ;	-----------------------------------------
+   018C                    1013 _ack:
+                           1014 ;	i2c.c:44: SDA = 0;
+                           1015 ;	genAssign
+   018C C2 95              1016 	clr	_SDA
+                           1017 ;	i2c.c:45: i2c_delay();
+                           1018 ;	genCall
+   018E 12s05r6E           1019 	lcall	_i2c_delay
+                           1020 ;	i2c.c:46: SCL = 1;
+                           1021 ;	genAssign
+   0191 D2 94              1022 	setb	_SCL
+                           1023 ;	i2c.c:47: i2c_delay();
+                           1024 ;	genCall
+   0193 12s05r6E           1025 	lcall	_i2c_delay
+                           1026 ;	i2c.c:48: SCL = 0;
+                           1027 ;	genAssign
+   0196 C2 94              1028 	clr	_SCL
+                           1029 ;	Peephole 300	removed redundant label 00101$
+   0198 22                 1030 	ret
+                           1031 ;------------------------------------------------------------
+                           1032 ;Allocation info for local variables in function 'noack'
+                           1033 ;------------------------------------------------------------
+                           1034 ;------------------------------------------------------------
+                           1035 ;	i2c.c:55: void noack()
+                           1036 ;	-----------------------------------------
+                           1037 ;	 function noack
+                           1038 ;	-----------------------------------------
+   0199                    1039 _noack:
+                           1040 ;	i2c.c:58: SDA = 1;
+                           1041 ;	genAssign
+   0199 D2 95              1042 	setb	_SDA
+                           1043 ;	i2c.c:59: i2c_delay();
+                           1044 ;	genCall
+   019B 12s05r6E           1045 	lcall	_i2c_delay
+                           1046 ;	i2c.c:60: SCL = 1;
+                           1047 ;	genAssign
+   019E D2 94              1048 	setb	_SCL
+                           1049 ;	i2c.c:61: i2c_delay();
+                           1050 ;	genCall
+   01A0 12s05r6E           1051 	lcall	_i2c_delay
+                           1052 ;	i2c.c:62: SCL = 0;
+                           1053 ;	genAssign
+   01A3 C2 94              1054 	clr	_SCL
+                           1055 ;	Peephole 300	removed redundant label 00101$
+   01A5 22                 1056 	ret
+                           1057 ;------------------------------------------------------------
+                           1058 ;Allocation info for local variables in function 'ack_poll'
+                           1059 ;------------------------------------------------------------
+                           1060 ;------------------------------------------------------------
+                           1061 ;	i2c.c:67: void ack_poll()
+                           1062 ;	-----------------------------------------
+                           1063 ;	 function ack_poll
+                           1064 ;	-----------------------------------------
+   01A6                    1065 _ack_poll:
+                           1066 ;	i2c.c:69: start_i2c();
+                           1067 ;	genCall
+   01A6 12s01r74           1068 	lcall	_start_i2c
+                           1069 ;	i2c.c:71: while(send(EEPROM_ID_W) == SEND_FAILED);
+   01A9                    1070 00101$:
+                           1071 ;	genCall
+   01A9 75 82 A0           1072 	mov	dpl,#0xA0
+   01AC 12s01rB9           1073 	lcall	_send
+   01AF AA 82              1074 	mov	r2,dpl
+                           1075 ;	genCmpEq
+                           1076 ;	gencjneshort
+   01B1 BA 01 02           1077 	cjne	r2,#0x01,00108$
+                           1078 ;	Peephole 112.b	changed ljmp to sjmp
+   01B4 80 F3              1079 	sjmp	00101$
+   01B6                    1080 00108$:
+                           1081 ;	i2c.c:72: stop_i2c();
+                           1082 ;	genCall
+                           1083 ;	Peephole 253.b	replaced lcall/ret with ljmp
+   01B6 02s01r80           1084 	ljmp	_stop_i2c
+                           1085 ;
+                           1086 ;------------------------------------------------------------
+                           1087 ;Allocation info for local variables in function 'send'
+                           1088 ;------------------------------------------------------------
+                           1089 ;data_in                   Allocated with name '_send_data_in_1_1'
+                           1090 ;i                         Allocated with name '_send_i_1_1'
+                           1091 ;ack_bit                   Allocated with name '_send_ack_bit_1_1'
+                           1092 ;------------------------------------------------------------
+                           1093 ;	i2c.c:80: unsigned char send(unsigned char data_in)
+                           1094 ;	-----------------------------------------
+                           1095 ;	 function send
+                           1096 ;	-----------------------------------------
+   01B9                    1097 _send:
+                           1098 ;	genReceive
+   01B9 E5 82              1099 	mov	a,dpl
+   01BB 90s00r06           1100 	mov	dptr,#_send_data_in_1_1
+   01BE F0                 1101 	movx	@dptr,a
+                           1102 ;	i2c.c:86: SCL = 0;
+                           1103 ;	genAssign
+   01BF C2 94              1104 	clr	_SCL
+                           1105 ;	i2c.c:87: for(i = 0; i < I2C_DATA_SIZE; i++)
+                           1106 ;	genAssign
+   01C1 7A 00              1107 	mov	r2,#0x00
+   01C3 7B 00              1108 	mov	r3,#0x00
+   01C5                    1109 00101$:
+                           1110 ;	genCmpLt
+                           1111 ;	genCmp
+   01C5 C3                 1112 	clr	c
+   01C6 EA                 1113 	mov	a,r2
+   01C7 94 08              1114 	subb	a,#0x08
+   01C9 EB                 1115 	mov	a,r3
+   01CA 64 80              1116 	xrl	a,#0x80
+   01CC 94 80              1117 	subb	a,#0x80
+                           1118 ;	genIfxJump
+                           1119 ;	Peephole 108.a	removed ljmp by inverse jump logic
+   01CE 50 3F              1120 	jnc	00104$
+                           1121 ;	Peephole 300	removed redundant label 00113$
+                           1122 ;	i2c.c:89: i2c_delay();
+                           1123 ;	genCall
+   01D0 C0 02              1124 	push	ar2
+   01D2 C0 03              1125 	push	ar3
+   01D4 12s05r6E           1126 	lcall	_i2c_delay
+   01D7 D0 03              1127 	pop	ar3
+   01D9 D0 02              1128 	pop	ar2
+                           1129 ;	i2c.c:91: SDA = (data_in & 0x80) ? 1:0;
+                           1130 ;	genAssign
+   01DB 90s00r06           1131 	mov	dptr,#_send_data_in_1_1
+   01DE E0                 1132 	movx	a,@dptr
+                           1133 ;	genAnd
+   01DF FC                 1134 	mov	r4,a
+                           1135 ;	Peephole 105	removed redundant mov
+                           1136 ;	genIfxJump
+                           1137 ;	Peephole 108.d	removed ljmp by inverse jump logic
+   01E0 30 E7 04           1138 	jnb	acc.7,00107$
+                           1139 ;	Peephole 300	removed redundant label 00114$
+                           1140 ;	genAssign
+   01E3 7C 01              1141 	mov	r4,#0x01
+                           1142 ;	Peephole 112.b	changed ljmp to sjmp
+   01E5 80 02              1143 	sjmp	00108$
+   01E7                    1144 00107$:
+                           1145 ;	genAssign
+   01E7 7C 00              1146 	mov	r4,#0x00
+   01E9                    1147 00108$:
+                           1148 ;	genAssign
+   01E9 EC                 1149 	mov	a,r4
+   01EA 24 FF              1150 	add	a,#0xff
+   01EC 92 95              1151 	mov	_SDA,c
+                           1152 ;	i2c.c:93: SCL = 1;
+                           1153 ;	genAssign
+   01EE D2 94              1154 	setb	_SCL
+                           1155 ;	i2c.c:94: i2c_delay();
+                           1156 ;	genCall
+   01F0 C0 02              1157 	push	ar2
+   01F2 C0 03              1158 	push	ar3
+   01F4 12s05r6E           1159 	lcall	_i2c_delay
+   01F7 D0 03              1160 	pop	ar3
+   01F9 D0 02              1161 	pop	ar2
+                           1162 ;	i2c.c:95: SCL = 0;
+                           1163 ;	genAssign
+   01FB C2 94              1164 	clr	_SCL
+                           1165 ;	i2c.c:97: data_in <<= 1;
+                           1166 ;	genAssign
+   01FD 90s00r06           1167 	mov	dptr,#_send_data_in_1_1
+   0200 E0                 1168 	movx	a,@dptr
+                           1169 ;	genLeftShift
+                           1170 ;	genLeftShiftLiteral
+                           1171 ;	genlshOne
+                           1172 ;	Peephole 105	removed redundant mov
+                           1173 ;	genAssign
+                           1174 ;	Peephole 204	removed redundant mov
+   0201 25 E0              1175 	add	a,acc
+   0203 FC                 1176 	mov	r4,a
+   0204 90s00r06           1177 	mov	dptr,#_send_data_in_1_1
+                           1178 ;	Peephole 100	removed redundant mov
+   0207 F0                 1179 	movx	@dptr,a
+                           1180 ;	i2c.c:87: for(i = 0; i < I2C_DATA_SIZE; i++)
+                           1181 ;	genPlus
+                           1182 ;     genPlusIncr
+   0208 0A                 1183 	inc	r2
+                           1184 ;	Peephole 112.b	changed ljmp to sjmp
+                           1185 ;	Peephole 243	avoided branch to sjmp
+   0209 BA 00 B9           1186 	cjne	r2,#0x00,00101$
+   020C 0B                 1187 	inc	r3
+                           1188 ;	Peephole 300	removed redundant label 00115$
+   020D 80 B6              1189 	sjmp	00101$
+   020F                    1190 00104$:
+                           1191 ;	i2c.c:100: ack_bit = SDA;
+                           1192 ;	genAssign
+   020F E4                 1193 	clr	a
+   0210 A2 95              1194 	mov	c,_SDA
+   0212 33                 1195 	rlc	a
+   0213 FA                 1196 	mov	r2,a
+                           1197 ;	i2c.c:101: SCL = 1;
+                           1198 ;	genAssign
+   0214 D2 94              1199 	setb	_SCL
+                           1200 ;	i2c.c:102: i2c_delay();
+                           1201 ;	genCall
+   0216 C0 02              1202 	push	ar2
+   0218 12s05r6E           1203 	lcall	_i2c_delay
+   021B D0 02              1204 	pop	ar2
+                           1205 ;	i2c.c:103: SCL = 0;
+                           1206 ;	genAssign
+   021D C2 94              1207 	clr	_SCL
+                           1208 ;	i2c.c:106: return ack_bit;
+                           1209 ;	genRet
+   021F 8A 82              1210 	mov	dpl,r2
+                           1211 ;	Peephole 300	removed redundant label 00105$
+   0221 22                 1212 	ret
+                           1213 ;------------------------------------------------------------
+                           1214 ;Allocation info for local variables in function 'read'
+                           1215 ;------------------------------------------------------------
+                           1216 ;i                         Allocated with name '_read_i_1_1'
+                           1217 ;temp                      Allocated with name '_read_temp_1_1'
+                           1218 ;------------------------------------------------------------
+                           1219 ;	i2c.c:114: unsigned char read()
+                           1220 ;	-----------------------------------------
+                           1221 ;	 function read
+                           1222 ;	-----------------------------------------
+   0222                    1223 _read:
+                           1224 ;	i2c.c:117: unsigned char temp = 0;
+                           1225 ;	genAssign
+   0222 90s00r07           1226 	mov	dptr,#_read_temp_1_1
+                           1227 ;	Peephole 181	changed mov to clr
+   0225 E4                 1228 	clr	a
+   0226 F0                 1229 	movx	@dptr,a
+                           1230 ;	i2c.c:119: SDA = 1;
+                           1231 ;	genAssign
+   0227 D2 95              1232 	setb	_SDA
+                           1233 ;	i2c.c:120: for(i = 0; i < I2C_DATA_SIZE; i++)
+                           1234 ;	genAssign
+   0229 7A 00              1235 	mov	r2,#0x00
+   022B 7B 00              1236 	mov	r3,#0x00
+   022D                    1237 00104$:
+                           1238 ;	genCmpLt
+                           1239 ;	genCmp
+   022D C3                 1240 	clr	c
+   022E EA                 1241 	mov	a,r2
+   022F 94 08              1242 	subb	a,#0x08
+   0231 EB                 1243 	mov	a,r3
+   0232 64 80              1244 	xrl	a,#0x80
+   0234 94 80              1245 	subb	a,#0x80
+                           1246 ;	genIfxJump
+                           1247 ;	Peephole 108.a	removed ljmp by inverse jump logic
+   0236 50 36              1248 	jnc	00107$
+                           1249 ;	Peephole 300	removed redundant label 00114$
+                           1250 ;	i2c.c:123: SCL = 0;
+                           1251 ;	genAssign
+   0238 C2 94              1252 	clr	_SCL
+                           1253 ;	i2c.c:124: i2c_delay();
+                           1254 ;	genCall
+   023A C0 02              1255 	push	ar2
+   023C C0 03              1256 	push	ar3
+   023E 12s05r6E           1257 	lcall	_i2c_delay
+   0241 D0 03              1258 	pop	ar3
+   0243 D0 02              1259 	pop	ar2
+                           1260 ;	i2c.c:125: SCL = 1;
+                           1261 ;	genAssign
+   0245 D2 94              1262 	setb	_SCL
+                           1263 ;	i2c.c:128: temp <<= 1;
+                           1264 ;	genAssign
+   0247 90s00r07           1265 	mov	dptr,#_read_temp_1_1
+   024A E0                 1266 	movx	a,@dptr
+                           1267 ;	genLeftShift
+                           1268 ;	genLeftShiftLiteral
+                           1269 ;	genlshOne
+                           1270 ;	Peephole 105	removed redundant mov
+                           1271 ;	genAssign
+                           1272 ;	Peephole 204	removed redundant mov
+   024B 25 E0              1273 	add	a,acc
+   024D FC                 1274 	mov	r4,a
+   024E 90s00r07           1275 	mov	dptr,#_read_temp_1_1
+                           1276 ;	Peephole 100	removed redundant mov
+   0251 F0                 1277 	movx	@dptr,a
+                           1278 ;	i2c.c:130: if(SDA)
+                           1279 ;	genIfx
+                           1280 ;	genIfxJump
+                           1281 ;	Peephole 108.d	removed ljmp by inverse jump logic
+   0252 30 95 0A           1282 	jnb	_SDA,00102$
+                           1283 ;	Peephole 300	removed redundant label 00115$
+                           1284 ;	i2c.c:131: temp |= 0x01;
+                           1285 ;	genAssign
+                           1286 ;	genOr
+   0255 90s00r07           1287 	mov	dptr,#_read_temp_1_1
+   0258 E0                 1288 	movx	a,@dptr
+   0259 FC                 1289 	mov	r4,a
+                           1290 ;	Peephole 248.a	optimized or to xdata
+   025A 44 01              1291 	orl	a,#0x01
+   025C F0                 1292 	movx	@dptr,a
+                           1293 ;	Peephole 112.b	changed ljmp to sjmp
+   025D 80 08              1294 	sjmp	00106$
+   025F                    1295 00102$:
+                           1296 ;	i2c.c:133: temp &= 0xFE;
+                           1297 ;	genAssign
+                           1298 ;	genAnd
+   025F 90s00r07           1299 	mov	dptr,#_read_temp_1_1
+   0262 E0                 1300 	movx	a,@dptr
+   0263 FC                 1301 	mov	r4,a
+                           1302 ;	Peephole 248.b	optimized and to xdata
+   0264 54 FE              1303 	anl	a,#0xFE
+   0266 F0                 1304 	movx	@dptr,a
+   0267                    1305 00106$:
+                           1306 ;	i2c.c:120: for(i = 0; i < I2C_DATA_SIZE; i++)
+                           1307 ;	genPlus
+                           1308 ;     genPlusIncr
+   0267 0A                 1309 	inc	r2
+                           1310 ;	Peephole 112.b	changed ljmp to sjmp
+                           1311 ;	Peephole 243	avoided branch to sjmp
+   0268 BA 00 C2           1312 	cjne	r2,#0x00,00104$
+   026B 0B                 1313 	inc	r3
+                           1314 ;	Peephole 300	removed redundant label 00116$
+   026C 80 BF              1315 	sjmp	00104$
+   026E                    1316 00107$:
+                           1317 ;	i2c.c:135: SCL = 0;
+                           1318 ;	genAssign
+   026E C2 94              1319 	clr	_SCL
+                           1320 ;	i2c.c:136: return temp;
+                           1321 ;	genAssign
+   0270 90s00r07           1322 	mov	dptr,#_read_temp_1_1
+   0273 E0                 1323 	movx	a,@dptr
+                           1324 ;	genRet
+                           1325 ;	Peephole 234.a	loading dpl directly from a(ccumulator), r2 not set
+   0274 F5 82              1326 	mov	dpl,a
+                           1327 ;	Peephole 300	removed redundant label 00108$
+   0276 22                 1328 	ret
+                           1329 ;------------------------------------------------------------
+                           1330 ;Allocation info for local variables in function 'eebytew'
+                           1331 ;------------------------------------------------------------
+                           1332 ;databyte                  Allocated with name '_eebytew_PARM_2'
+                           1333 ;addr                      Allocated with name '_eebytew_addr_1_1'
+                           1334 ;slave_address             Allocated with name '_eebytew_slave_address_1_1'
+                           1335 ;byte_addr                 Allocated with name '_eebytew_byte_addr_1_1'
+                           1336 ;------------------------------------------------------------
+                           1337 ;	i2c.c:145: int eebytew(int addr, unsigned char databyte)
+                           1338 ;	-----------------------------------------
+                           1339 ;	 function eebytew
+                           1340 ;	-----------------------------------------
+   0277                    1341 _eebytew:
+                           1342 ;	genReceive
+   0277 AA 83              1343 	mov	r2,dph
+   0279 E5 82              1344 	mov	a,dpl
+   027B 90s00r09           1345 	mov	dptr,#_eebytew_addr_1_1
+   027E F0                 1346 	movx	@dptr,a
+   027F A3                 1347 	inc	dptr
+   0280 EA                 1348 	mov	a,r2
+   0281 F0                 1349 	movx	@dptr,a
+                           1350 ;	i2c.c:147: unsigned char slave_address = CALC_SLAVE_ADDR_WR(addr,EEPROM_ID_W);
+                           1351 ;	genAssign
+   0282 90s00r09           1352 	mov	dptr,#_eebytew_addr_1_1
+   0285 E0                 1353 	movx	a,@dptr
+   0286 FA                 1354 	mov	r2,a
+   0287 A3                 1355 	inc	dptr
+   0288 E0                 1356 	movx	a,@dptr
+   0289 FB                 1357 	mov	r3,a
+                           1358 ;	genAnd
+   028A 7C 00              1359 	mov	r4,#0x00
+   028C 74 07              1360 	mov	a,#0x07
+   028E 5B                 1361 	anl	a,r3
+                           1362 ;	genRightShift
+                           1363 ;	genSignedRightShift
+                           1364 ;	genRightShiftLiteral
+                           1365 ;	genrshTwo
+   028F FD                 1366 	mov	r5,a
+                           1367 ;	Peephole 105	removed redundant mov
+   0290 A2 E7              1368 	mov	c,acc.7
+   0292 CC                 1369 	xch	a,r4
+   0293 33                 1370 	rlc	a
+   0294 CC                 1371 	xch	a,r4
+   0295 33                 1372 	rlc	a
+   0296 CC                 1373 	xch	a,r4
+   0297 54 01              1374 	anl	a,#0x01
+   0299 30 E0 02           1375 	jnb	acc.0,00112$
+   029C 44 FE              1376 	orl	a,#0xfe
+   029E                    1377 00112$:
+   029E FD                 1378 	mov	r5,a
+                           1379 ;	genOr
+   029F 43 04 A0           1380 	orl	ar4,#0xA0
+                           1381 ;	genCast
+                           1382 ;	i2c.c:148: unsigned char byte_addr = CALC_ADDR(addr);
+                           1383 ;	genAnd
+   02A2 7B 00              1384 	mov	r3,#0x00
+                           1385 ;	genCast
+                           1386 ;	i2c.c:151: start_i2c();
+                           1387 ;	genCall
+   02A4 C0 02              1388 	push	ar2
+   02A6 C0 04              1389 	push	ar4
+   02A8 12s01r74           1390 	lcall	_start_i2c
+   02AB D0 04              1391 	pop	ar4
+   02AD D0 02              1392 	pop	ar2
+                           1393 ;	i2c.c:153: if(send(slave_address) == SEND_FAILED)
+                           1394 ;	genCall
+   02AF 8C 82              1395 	mov	dpl,r4
+   02B1 C0 02              1396 	push	ar2
+   02B3 12s01rB9           1397 	lcall	_send
+   02B6 AB 82              1398 	mov	r3,dpl
+   02B8 D0 02              1399 	pop	ar2
+                           1400 ;	genCmpEq
+                           1401 ;	gencjneshort
+                           1402 ;	Peephole 112.b	changed ljmp to sjmp
+                           1403 ;	Peephole 198.b	optimized misc jump sequence
+   02BA BB 01 04           1404 	cjne	r3,#0x01,00102$
+                           1405 ;	Peephole 200.b	removed redundant sjmp
+                           1406 ;	Peephole 300	removed redundant label 00113$
+                           1407 ;	Peephole 300	removed redundant label 00114$
+                           1408 ;	i2c.c:154: return SEND_FAILED_CODE;
+                           1409 ;	genRet
+                           1410 ;	Peephole 182.b	used 16 bit load of dptr
+   02BD 90 01 00           1411 	mov	dptr,#0x0100
+                           1412 ;	Peephole 112.b	changed ljmp to sjmp
+                           1413 ;	Peephole 251.b	replaced sjmp to ret with ret
+   02C0 22                 1414 	ret
+   02C1                    1415 00102$:
+                           1416 ;	i2c.c:156: if(send(byte_addr) == SEND_FAILED)
+                           1417 ;	genCall
+   02C1 8A 82              1418 	mov	dpl,r2
+   02C3 12s01rB9           1419 	lcall	_send
+   02C6 AA 82              1420 	mov	r2,dpl
+                           1421 ;	genCmpEq
+                           1422 ;	gencjneshort
+                           1423 ;	Peephole 112.b	changed ljmp to sjmp
+                           1424 ;	Peephole 198.b	optimized misc jump sequence
+   02C8 BA 01 04           1425 	cjne	r2,#0x01,00104$
+                           1426 ;	Peephole 200.b	removed redundant sjmp
+                           1427 ;	Peephole 300	removed redundant label 00115$
+                           1428 ;	Peephole 300	removed redundant label 00116$
+                           1429 ;	i2c.c:157: return SEND_FAILED_CODE;
+                           1430 ;	genRet
+                           1431 ;	Peephole 182.b	used 16 bit load of dptr
+   02CB 90 01 00           1432 	mov	dptr,#0x0100
+                           1433 ;	Peephole 112.b	changed ljmp to sjmp
+                           1434 ;	Peephole 251.b	replaced sjmp to ret with ret
+   02CE 22                 1435 	ret
+   02CF                    1436 00104$:
+                           1437 ;	i2c.c:159: if(send(databyte) == SEND_FAILED)
+                           1438 ;	genAssign
+   02CF 90s00r08           1439 	mov	dptr,#_eebytew_PARM_2
+   02D2 E0                 1440 	movx	a,@dptr
+                           1441 ;	genCall
+   02D3 FA                 1442 	mov	r2,a
+                           1443 ;	Peephole 244.c	loading dpl from a instead of r2
+   02D4 F5 82              1444 	mov	dpl,a
+   02D6 12s01rB9           1445 	lcall	_send
+   02D9 AA 82              1446 	mov	r2,dpl
+                           1447 ;	genCmpEq
+                           1448 ;	gencjneshort
+                           1449 ;	Peephole 112.b	changed ljmp to sjmp
+                           1450 ;	Peephole 198.b	optimized misc jump sequence
+   02DB BA 01 04           1451 	cjne	r2,#0x01,00106$
+                           1452 ;	Peephole 200.b	removed redundant sjmp
+                           1453 ;	Peephole 300	removed redundant label 00117$
+                           1454 ;	Peephole 300	removed redundant label 00118$
+                           1455 ;	i2c.c:160: return SEND_FAILED_CODE;
+                           1456 ;	genRet
+                           1457 ;	Peephole 182.b	used 16 bit load of dptr
+   02DE 90 01 00           1458 	mov	dptr,#0x0100
+                           1459 ;	Peephole 112.b	changed ljmp to sjmp
+                           1460 ;	Peephole 251.b	replaced sjmp to ret with ret
+   02E1 22                 1461 	ret
+   02E2                    1462 00106$:
+                           1463 ;	i2c.c:162: stop_i2c();
+                           1464 ;	genCall
+   02E2 12s01r80           1465 	lcall	_stop_i2c
+                           1466 ;	i2c.c:164: ack_poll();
+                           1467 ;	genCall
+   02E5 12s01rA6           1468 	lcall	_ack_poll
+                           1469 ;	i2c.c:166: return SEND_SUCC_CODE;
+                           1470 ;	genRet
+                           1471 ;	Peephole 182.b	used 16 bit load of dptr
+   02E8 90 02 00           1472 	mov	dptr,#0x0200
+                           1473 ;	Peephole 300	removed redundant label 00107$
+   02EB 22                 1474 	ret
+                           1475 ;------------------------------------------------------------
+                           1476 ;Allocation info for local variables in function 'eebyter'
+                           1477 ;------------------------------------------------------------
+                           1478 ;addr                      Allocated with name '_eebyter_addr_1_1'
+                           1479 ;slave_address_wr          Allocated with name '_eebyter_slave_address_wr_1_1'
+                           1480 ;slave_address_rd          Allocated with name '_eebyter_slave_address_rd_1_1'
+                           1481 ;byte_addr                 Allocated with name '_eebyter_byte_addr_1_1'
+                           1482 ;byte_read                 Allocated with name '_eebyter_byte_read_1_1'
+                           1483 ;------------------------------------------------------------
+                           1484 ;	i2c.c:175: int eebyter(int addr)
+                           1485 ;	-----------------------------------------
+                           1486 ;	 function eebyter
+                           1487 ;	-----------------------------------------
+   02EC                    1488 _eebyter:
+                           1489 ;	genReceive
+   02EC AA 83              1490 	mov	r2,dph
+   02EE E5 82              1491 	mov	a,dpl
+   02F0 90s00r0B           1492 	mov	dptr,#_eebyter_addr_1_1
+   02F3 F0                 1493 	movx	@dptr,a
+   02F4 A3                 1494 	inc	dptr
+   02F5 EA                 1495 	mov	a,r2
+   02F6 F0                 1496 	movx	@dptr,a
+                           1497 ;	i2c.c:177: unsigned char slave_address_wr = CALC_SLAVE_ADDR_WR(addr,EEPROM_ID_W);
+                           1498 ;	genAssign
+   02F7 90s00r0B           1499 	mov	dptr,#_eebyter_addr_1_1
+   02FA E0                 1500 	movx	a,@dptr
+   02FB FA                 1501 	mov	r2,a
+   02FC A3                 1502 	inc	dptr
+   02FD E0                 1503 	movx	a,@dptr
+   02FE FB                 1504 	mov	r3,a
+                           1505 ;	genAnd
+   02FF 7C 00              1506 	mov	r4,#0x00
+   0301 74 07              1507 	mov	a,#0x07
+   0303 5B                 1508 	anl	a,r3
+                           1509 ;	genRightShift
+                           1510 ;	genSignedRightShift
+                           1511 ;	genRightShiftLiteral
+                           1512 ;	genrshTwo
+   0304 FD                 1513 	mov	r5,a
+                           1514 ;	Peephole 105	removed redundant mov
+   0305 A2 E7              1515 	mov	c,acc.7
+   0307 CC                 1516 	xch	a,r4
+   0308 33                 1517 	rlc	a
+   0309 CC                 1518 	xch	a,r4
+   030A 33                 1519 	rlc	a
+   030B CC                 1520 	xch	a,r4
+   030C 54 01              1521 	anl	a,#0x01
+   030E 30 E0 02           1522 	jnb	acc.0,00112$
+   0311 44 FE              1523 	orl	a,#0xfe
+   0313                    1524 00112$:
+   0313 FD                 1525 	mov	r5,a
+                           1526 ;	genOr
+   0314 74 A0              1527 	mov	a,#0xA0
+   0316 4C                 1528 	orl	a,r4
+   0317 FE                 1529 	mov	r6,a
+   0318 8D 07              1530 	mov	ar7,r5
+                           1531 ;	genCast
+                           1532 ;	i2c.c:178: unsigned char slave_address_rd = CALC_SLAVE_ADDR_RD(addr,EEPROM_ID_R);
+                           1533 ;	genOr
+   031A 43 04 A1           1534 	orl	ar4,#0xA1
+                           1535 ;	genCast
+                           1536 ;	i2c.c:179: unsigned char byte_addr = CALC_ADDR(addr);
+                           1537 ;	genAnd
+   031D 7B 00              1538 	mov	r3,#0x00
+                           1539 ;	genCast
+                           1540 ;	i2c.c:184: start_i2c();
+                           1541 ;	genCall
+   031F C0 02              1542 	push	ar2
+   0321 C0 04              1543 	push	ar4
+   0323 C0 06              1544 	push	ar6
+   0325 12s01r74           1545 	lcall	_start_i2c
+   0328 D0 06              1546 	pop	ar6
+   032A D0 04              1547 	pop	ar4
+   032C D0 02              1548 	pop	ar2
+                           1549 ;	i2c.c:186: if(send(slave_address_wr) == SEND_FAILED)
+                           1550 ;	genCall
+   032E 8E 82              1551 	mov	dpl,r6
+   0330 C0 02              1552 	push	ar2
+   0332 C0 04              1553 	push	ar4
+   0334 12s01rB9           1554 	lcall	_send
+   0337 AB 82              1555 	mov	r3,dpl
+   0339 D0 04              1556 	pop	ar4
+   033B D0 02              1557 	pop	ar2
+                           1558 ;	genCmpEq
+                           1559 ;	gencjneshort
+                           1560 ;	Peephole 112.b	changed ljmp to sjmp
+                           1561 ;	Peephole 198.b	optimized misc jump sequence
+   033D BB 01 04           1562 	cjne	r3,#0x01,00102$
+                           1563 ;	Peephole 200.b	removed redundant sjmp
+                           1564 ;	Peephole 300	removed redundant label 00113$
+                           1565 ;	Peephole 300	removed redundant label 00114$
+                           1566 ;	i2c.c:187: return SEND_FAILED_CODE;
+                           1567 ;	genRet
+                           1568 ;	Peephole 182.b	used 16 bit load of dptr
+   0340 90 01 00           1569 	mov	dptr,#0x0100
+                           1570 ;	Peephole 112.b	changed ljmp to sjmp
+                           1571 ;	Peephole 251.b	replaced sjmp to ret with ret
+   0343 22                 1572 	ret
+   0344                    1573 00102$:
+                           1574 ;	i2c.c:189: if(send(byte_addr) ==  SEND_FAILED)
+                           1575 ;	genCall
+   0344 8A 82              1576 	mov	dpl,r2
+   0346 C0 04              1577 	push	ar4
+   0348 12s01rB9           1578 	lcall	_send
+   034B AA 82              1579 	mov	r2,dpl
+   034D D0 04              1580 	pop	ar4
+                           1581 ;	genCmpEq
+                           1582 ;	gencjneshort
+                           1583 ;	Peephole 112.b	changed ljmp to sjmp
+                           1584 ;	Peephole 198.b	optimized misc jump sequence
+   034F BA 01 04           1585 	cjne	r2,#0x01,00104$
+                           1586 ;	Peephole 200.b	removed redundant sjmp
+                           1587 ;	Peephole 300	removed redundant label 00115$
+                           1588 ;	Peephole 300	removed redundant label 00116$
+                           1589 ;	i2c.c:190: return SEND_FAILED_CODE;
+                           1590 ;	genRet
+                           1591 ;	Peephole 182.b	used 16 bit load of dptr
+   0352 90 01 00           1592 	mov	dptr,#0x0100
+                           1593 ;	Peephole 112.b	changed ljmp to sjmp
+                           1594 ;	Peephole 251.b	replaced sjmp to ret with ret
+   0355 22                 1595 	ret
+   0356                    1596 00104$:
+                           1597 ;	i2c.c:192: start_i2c();
+                           1598 ;	genCall
+   0356 C0 04              1599 	push	ar4
+   0358 12s01r74           1600 	lcall	_start_i2c
+   035B D0 04              1601 	pop	ar4
+                           1602 ;	i2c.c:194: if(send(slave_address_rd) == SEND_FAILED)
+                           1603 ;	genCall
+   035D 8C 82              1604 	mov	dpl,r4
+   035F 12s01rB9           1605 	lcall	_send
+   0362 AA 82              1606 	mov	r2,dpl
+                           1607 ;	genCmpEq
+                           1608 ;	gencjneshort
+                           1609 ;	Peephole 112.b	changed ljmp to sjmp
+                           1610 ;	Peephole 198.b	optimized misc jump sequence
+   0364 BA 01 04           1611 	cjne	r2,#0x01,00106$
+                           1612 ;	Peephole 200.b	removed redundant sjmp
+                           1613 ;	Peephole 300	removed redundant label 00117$
+                           1614 ;	Peephole 300	removed redundant label 00118$
+                           1615 ;	i2c.c:195: return SEND_FAILED_CODE;
+                           1616 ;	genRet
+                           1617 ;	Peephole 182.b	used 16 bit load of dptr
+   0367 90 01 00           1618 	mov	dptr,#0x0100
+                           1619 ;	Peephole 112.b	changed ljmp to sjmp
+                           1620 ;	Peephole 251.b	replaced sjmp to ret with ret
+   036A 22                 1621 	ret
+   036B                    1622 00106$:
+                           1623 ;	i2c.c:197: byte_read = read();
+                           1624 ;	genCall
+   036B 12s02r22           1625 	lcall	_read
+   036E AA 82              1626 	mov	r2,dpl
+                           1627 ;	i2c.c:199: noack();
+                           1628 ;	genCall
+   0370 C0 02              1629 	push	ar2
+   0372 12s01r99           1630 	lcall	_noack
+   0375 D0 02              1631 	pop	ar2
+                           1632 ;	i2c.c:201: stop_i2c();
+                           1633 ;	genCall
+   0377 C0 02              1634 	push	ar2
+   0379 12s01r80           1635 	lcall	_stop_i2c
+   037C D0 02              1636 	pop	ar2
+                           1637 ;	i2c.c:203: return byte_read;
+                           1638 ;	genCast
+   037E 7B 00              1639 	mov	r3,#0x00
+                           1640 ;	genRet
+   0380 8A 82              1641 	mov	dpl,r2
+   0382 8B 83              1642 	mov	dph,r3
+                           1643 ;	Peephole 300	removed redundant label 00107$
+   0384 22                 1644 	ret
+                           1645 ;------------------------------------------------------------
+                           1646 ;Allocation info for local variables in function 'accelbytew'
+                           1647 ;------------------------------------------------------------
+                           1648 ;databyte                  Allocated with name '_accelbytew_PARM_2'
+                           1649 ;addr                      Allocated with name '_accelbytew_addr_1_1'
+                           1650 ;slave_address             Allocated with name '_accelbytew_slave_address_1_1'
+                           1651 ;byte_addr                 Allocated with name '_accelbytew_byte_addr_1_1'
+                           1652 ;------------------------------------------------------------
+                           1653 ;	i2c.c:210: int accelbytew(int addr, unsigned char databyte)
+                           1654 ;	-----------------------------------------
+                           1655 ;	 function accelbytew
+                           1656 ;	-----------------------------------------
+   0385                    1657 _accelbytew:
+                           1658 ;	genReceive
+   0385 AA 83              1659 	mov	r2,dph
+   0387 E5 82              1660 	mov	a,dpl
+   0389 90s00r0E           1661 	mov	dptr,#_accelbytew_addr_1_1
+   038C F0                 1662 	movx	@dptr,a
+   038D A3                 1663 	inc	dptr
+   038E EA                 1664 	mov	a,r2
+   038F F0                 1665 	movx	@dptr,a
+                           1666 ;	i2c.c:212: unsigned char slave_address = CALC_SLAVE_ADDR_WR(addr,ACCEL_ID_W);
+                           1667 ;	genAssign
+   0390 90s00r0E           1668 	mov	dptr,#_accelbytew_addr_1_1
+   0393 E0                 1669 	movx	a,@dptr
+   0394 FA                 1670 	mov	r2,a
+   0395 A3                 1671 	inc	dptr
+   0396 E0                 1672 	movx	a,@dptr
+   0397 FB                 1673 	mov	r3,a
+                           1674 ;	genAnd
+   0398 7C 00              1675 	mov	r4,#0x00
+   039A 74 07              1676 	mov	a,#0x07
+   039C 5B                 1677 	anl	a,r3
+                           1678 ;	genRightShift
+                           1679 ;	genSignedRightShift
+                           1680 ;	genRightShiftLiteral
+                           1681 ;	genrshTwo
+   039D FD                 1682 	mov	r5,a
+                           1683 ;	Peephole 105	removed redundant mov
+   039E A2 E7              1684 	mov	c,acc.7
+   03A0 CC                 1685 	xch	a,r4
+   03A1 33                 1686 	rlc	a
+   03A2 CC                 1687 	xch	a,r4
+   03A3 33                 1688 	rlc	a
+   03A4 CC                 1689 	xch	a,r4
+   03A5 54 01              1690 	anl	a,#0x01
+   03A7 30 E0 02           1691 	jnb	acc.0,00112$
+   03AA 44 FE              1692 	orl	a,#0xfe
+   03AC                    1693 00112$:
+   03AC FD                 1694 	mov	r5,a
+                           1695 ;	genOr
+   03AD 43 04 3A           1696 	orl	ar4,#0x3A
+                           1697 ;	genCast
+                           1698 ;	i2c.c:213: unsigned char byte_addr = CALC_ADDR(addr);
+                           1699 ;	genAnd
+   03B0 7B 00              1700 	mov	r3,#0x00
+                           1701 ;	genCast
+                           1702 ;	i2c.c:216: start_i2c();
+                           1703 ;	genCall
+   03B2 C0 02              1704 	push	ar2
+   03B4 C0 04              1705 	push	ar4
+   03B6 12s01r74           1706 	lcall	_start_i2c
+   03B9 D0 04              1707 	pop	ar4
+   03BB D0 02              1708 	pop	ar2
+                           1709 ;	i2c.c:218: if(send(slave_address) == SEND_FAILED)
+                           1710 ;	genCall
+   03BD 8C 82              1711 	mov	dpl,r4
+   03BF C0 02              1712 	push	ar2
+   03C1 12s01rB9           1713 	lcall	_send
+   03C4 AB 82              1714 	mov	r3,dpl
+   03C6 D0 02              1715 	pop	ar2
+                           1716 ;	genCmpEq
+                           1717 ;	gencjneshort
+                           1718 ;	Peephole 112.b	changed ljmp to sjmp
+                           1719 ;	Peephole 198.b	optimized misc jump sequence
+   03C8 BB 01 04           1720 	cjne	r3,#0x01,00102$
+                           1721 ;	Peephole 200.b	removed redundant sjmp
+                           1722 ;	Peephole 300	removed redundant label 00113$
+                           1723 ;	Peephole 300	removed redundant label 00114$
+                           1724 ;	i2c.c:219: return SEND_FAILED_CODE;
+                           1725 ;	genRet
+                           1726 ;	Peephole 182.b	used 16 bit load of dptr
+   03CB 90 01 00           1727 	mov	dptr,#0x0100
+                           1728 ;	Peephole 112.b	changed ljmp to sjmp
+                           1729 ;	Peephole 251.b	replaced sjmp to ret with ret
+   03CE 22                 1730 	ret
+   03CF                    1731 00102$:
+                           1732 ;	i2c.c:221: if(send(byte_addr) == SEND_FAILED)
+                           1733 ;	genCall
+   03CF 8A 82              1734 	mov	dpl,r2
+   03D1 12s01rB9           1735 	lcall	_send
+   03D4 AA 82              1736 	mov	r2,dpl
+                           1737 ;	genCmpEq
+                           1738 ;	gencjneshort
+                           1739 ;	Peephole 112.b	changed ljmp to sjmp
+                           1740 ;	Peephole 198.b	optimized misc jump sequence
+   03D6 BA 01 04           1741 	cjne	r2,#0x01,00104$
+                           1742 ;	Peephole 200.b	removed redundant sjmp
+                           1743 ;	Peephole 300	removed redundant label 00115$
+                           1744 ;	Peephole 300	removed redundant label 00116$
+                           1745 ;	i2c.c:222: return SEND_FAILED_CODE;
+                           1746 ;	genRet
+                           1747 ;	Peephole 182.b	used 16 bit load of dptr
+   03D9 90 01 00           1748 	mov	dptr,#0x0100
+                           1749 ;	Peephole 112.b	changed ljmp to sjmp
+                           1750 ;	Peephole 251.b	replaced sjmp to ret with ret
+   03DC 22                 1751 	ret
+   03DD                    1752 00104$:
+                           1753 ;	i2c.c:224: if(send(databyte) == SEND_FAILED)
+                           1754 ;	genAssign
+   03DD 90s00r0D           1755 	mov	dptr,#_accelbytew_PARM_2
+   03E0 E0                 1756 	movx	a,@dptr
+                           1757 ;	genCall
+   03E1 FA                 1758 	mov	r2,a
+                           1759 ;	Peephole 244.c	loading dpl from a instead of r2
+   03E2 F5 82              1760 	mov	dpl,a
+   03E4 12s01rB9           1761 	lcall	_send
+   03E7 AA 82              1762 	mov	r2,dpl
+                           1763 ;	genCmpEq
+                           1764 ;	gencjneshort
+                           1765 ;	Peephole 112.b	changed ljmp to sjmp
+                           1766 ;	Peephole 198.b	optimized misc jump sequence
+   03E9 BA 01 04           1767 	cjne	r2,#0x01,00106$
+                           1768 ;	Peephole 200.b	removed redundant sjmp
+                           1769 ;	Peephole 300	removed redundant label 00117$
+                           1770 ;	Peephole 300	removed redundant label 00118$
+                           1771 ;	i2c.c:225: return SEND_FAILED_CODE;
+                           1772 ;	genRet
+                           1773 ;	Peephole 182.b	used 16 bit load of dptr
+   03EC 90 01 00           1774 	mov	dptr,#0x0100
+                           1775 ;	Peephole 112.b	changed ljmp to sjmp
+                           1776 ;	Peephole 251.b	replaced sjmp to ret with ret
+   03EF 22                 1777 	ret
+   03F0                    1778 00106$:
+                           1779 ;	i2c.c:227: stop_i2c();
+                           1780 ;	genCall
+   03F0 12s01r80           1781 	lcall	_stop_i2c
+                           1782 ;	i2c.c:230: delay_ms(5);
+                           1783 ;	genCall
+                           1784 ;	Peephole 182.b	used 16 bit load of dptr
+   03F3 90 00 05           1785 	mov	dptr,#0x0005
+   03F6 12s00r00           1786 	lcall	_delay_ms
+                           1787 ;	i2c.c:231: return SEND_SUCC_CODE;
+                           1788 ;	genRet
+                           1789 ;	Peephole 182.b	used 16 bit load of dptr
+   03F9 90 02 00           1790 	mov	dptr,#0x0200
+                           1791 ;	Peephole 300	removed redundant label 00107$
+   03FC 22                 1792 	ret
+                           1793 ;------------------------------------------------------------
+                           1794 ;Allocation info for local variables in function 'accelbyter'
+                           1795 ;------------------------------------------------------------
+                           1796 ;addr                      Allocated with name '_accelbyter_addr_1_1'
+                           1797 ;slave_address_wr          Allocated with name '_accelbyter_slave_address_wr_1_1'
+                           1798 ;slave_address_rd          Allocated with name '_accelbyter_slave_address_rd_1_1'
+                           1799 ;byte_addr                 Allocated with name '_accelbyter_byte_addr_1_1'
+                           1800 ;byte_read                 Allocated with name '_accelbyter_byte_read_1_1'
+                           1801 ;------------------------------------------------------------
+                           1802 ;	i2c.c:237: int accelbyter(int addr)
+                           1803 ;	-----------------------------------------
+                           1804 ;	 function accelbyter
+                           1805 ;	-----------------------------------------
+   03FD                    1806 _accelbyter:
+                           1807 ;	genReceive
+   03FD AA 83              1808 	mov	r2,dph
+   03FF E5 82              1809 	mov	a,dpl
+   0401 90s00r10           1810 	mov	dptr,#_accelbyter_addr_1_1
+   0404 F0                 1811 	movx	@dptr,a
+   0405 A3                 1812 	inc	dptr
+   0406 EA                 1813 	mov	a,r2
+   0407 F0                 1814 	movx	@dptr,a
+                           1815 ;	i2c.c:239: unsigned char slave_address_wr = CALC_SLAVE_ADDR_WR(addr,ACCEL_ID_W);
+                           1816 ;	genAssign
+   0408 90s00r10           1817 	mov	dptr,#_accelbyter_addr_1_1
+   040B E0                 1818 	movx	a,@dptr
+   040C FA                 1819 	mov	r2,a
+   040D A3                 1820 	inc	dptr
+   040E E0                 1821 	movx	a,@dptr
+   040F FB                 1822 	mov	r3,a
+                           1823 ;	genAnd
+   0410 7C 00              1824 	mov	r4,#0x00
+   0412 74 07              1825 	mov	a,#0x07
+   0414 5B                 1826 	anl	a,r3
+                           1827 ;	genRightShift
+                           1828 ;	genSignedRightShift
+                           1829 ;	genRightShiftLiteral
+                           1830 ;	genrshTwo
+   0415 FD                 1831 	mov	r5,a
+                           1832 ;	Peephole 105	removed redundant mov
+   0416 A2 E7              1833 	mov	c,acc.7
+   0418 CC                 1834 	xch	a,r4
+   0419 33                 1835 	rlc	a
+   041A CC                 1836 	xch	a,r4
+   041B 33                 1837 	rlc	a
+   041C CC                 1838 	xch	a,r4
+   041D 54 01              1839 	anl	a,#0x01
+   041F 30 E0 02           1840 	jnb	acc.0,00112$
+   0422 44 FE              1841 	orl	a,#0xfe
+   0424                    1842 00112$:
+   0424 FD                 1843 	mov	r5,a
+                           1844 ;	genOr
+   0425 74 3A              1845 	mov	a,#0x3A
+   0427 4C                 1846 	orl	a,r4
+   0428 FE                 1847 	mov	r6,a
+   0429 8D 07              1848 	mov	ar7,r5
+                           1849 ;	genCast
+                           1850 ;	i2c.c:240: unsigned char slave_address_rd = CALC_SLAVE_ADDR_RD(addr,ACCEL_ID_R);
+                           1851 ;	genOr
+   042B 43 04 3B           1852 	orl	ar4,#0x3B
+                           1853 ;	genCast
+                           1854 ;	i2c.c:241: unsigned char byte_addr = CALC_ADDR(addr);
+                           1855 ;	genAnd
+   042E 7B 00              1856 	mov	r3,#0x00
+                           1857 ;	genCast
+                           1858 ;	i2c.c:246: start_i2c();
+                           1859 ;	genCall
+   0430 C0 02              1860 	push	ar2
+   0432 C0 04              1861 	push	ar4
+   0434 C0 06              1862 	push	ar6
+   0436 12s01r74           1863 	lcall	_start_i2c
+   0439 D0 06              1864 	pop	ar6
+   043B D0 04              1865 	pop	ar4
+   043D D0 02              1866 	pop	ar2
+                           1867 ;	i2c.c:248: if(send(slave_address_wr) == SEND_FAILED)
+                           1868 ;	genCall
+   043F 8E 82              1869 	mov	dpl,r6
+   0441 C0 02              1870 	push	ar2
+   0443 C0 04              1871 	push	ar4
+   0445 12s01rB9           1872 	lcall	_send
+   0448 AB 82              1873 	mov	r3,dpl
+   044A D0 04              1874 	pop	ar4
+   044C D0 02              1875 	pop	ar2
+                           1876 ;	genCmpEq
+                           1877 ;	gencjneshort
+                           1878 ;	Peephole 112.b	changed ljmp to sjmp
+                           1879 ;	Peephole 198.b	optimized misc jump sequence
+   044E BB 01 04           1880 	cjne	r3,#0x01,00102$
+                           1881 ;	Peephole 200.b	removed redundant sjmp
+                           1882 ;	Peephole 300	removed redundant label 00113$
+                           1883 ;	Peephole 300	removed redundant label 00114$
+                           1884 ;	i2c.c:249: return SEND_FAILED_CODE;
+                           1885 ;	genRet
+                           1886 ;	Peephole 182.b	used 16 bit load of dptr
+   0451 90 01 00           1887 	mov	dptr,#0x0100
+                           1888 ;	Peephole 112.b	changed ljmp to sjmp
+                           1889 ;	Peephole 251.b	replaced sjmp to ret with ret
+   0454 22                 1890 	ret
+   0455                    1891 00102$:
+                           1892 ;	i2c.c:251: if(send(byte_addr) ==  SEND_FAILED)
+                           1893 ;	genCall
+   0455 8A 82              1894 	mov	dpl,r2
+   0457 C0 04              1895 	push	ar4
+   0459 12s01rB9           1896 	lcall	_send
+   045C AA 82              1897 	mov	r2,dpl
+   045E D0 04              1898 	pop	ar4
+                           1899 ;	genCmpEq
+                           1900 ;	gencjneshort
+                           1901 ;	Peephole 112.b	changed ljmp to sjmp
+                           1902 ;	Peephole 198.b	optimized misc jump sequence
+   0460 BA 01 04           1903 	cjne	r2,#0x01,00104$
+                           1904 ;	Peephole 200.b	removed redundant sjmp
+                           1905 ;	Peephole 300	removed redundant label 00115$
+                           1906 ;	Peephole 300	removed redundant label 00116$
+                           1907 ;	i2c.c:252: return SEND_FAILED_CODE;
+                           1908 ;	genRet
+                           1909 ;	Peephole 182.b	used 16 bit load of dptr
+   0463 90 01 00           1910 	mov	dptr,#0x0100
+                           1911 ;	Peephole 112.b	changed ljmp to sjmp
+                           1912 ;	Peephole 251.b	replaced sjmp to ret with ret
+   0466 22                 1913 	ret
+   0467                    1914 00104$:
+                           1915 ;	i2c.c:254: start_i2c();
+                           1916 ;	genCall
+   0467 C0 04              1917 	push	ar4
+   0469 12s01r74           1918 	lcall	_start_i2c
+   046C D0 04              1919 	pop	ar4
+                           1920 ;	i2c.c:256: if(send(slave_address_rd) == SEND_FAILED)
+                           1921 ;	genCall
+   046E 8C 82              1922 	mov	dpl,r4
+   0470 12s01rB9           1923 	lcall	_send
+   0473 AA 82              1924 	mov	r2,dpl
+                           1925 ;	genCmpEq
+                           1926 ;	gencjneshort
+                           1927 ;	Peephole 112.b	changed ljmp to sjmp
+                           1928 ;	Peephole 198.b	optimized misc jump sequence
+   0475 BA 01 04           1929 	cjne	r2,#0x01,00106$
+                           1930 ;	Peephole 200.b	removed redundant sjmp
+                           1931 ;	Peephole 300	removed redundant label 00117$
+                           1932 ;	Peephole 300	removed redundant label 00118$
+                           1933 ;	i2c.c:257: return SEND_FAILED_CODE;
+                           1934 ;	genRet
+                           1935 ;	Peephole 182.b	used 16 bit load of dptr
+   0478 90 01 00           1936 	mov	dptr,#0x0100
+                           1937 ;	Peephole 112.b	changed ljmp to sjmp
+                           1938 ;	Peephole 251.b	replaced sjmp to ret with ret
+   047B 22                 1939 	ret
+   047C                    1940 00106$:
+                           1941 ;	i2c.c:259: byte_read = read();
+                           1942 ;	genCall
+   047C 12s02r22           1943 	lcall	_read
+   047F AA 82              1944 	mov	r2,dpl
+                           1945 ;	i2c.c:261: noack();
+                           1946 ;	genCall
+   0481 C0 02              1947 	push	ar2
+   0483 12s01r99           1948 	lcall	_noack
+   0486 D0 02              1949 	pop	ar2
+                           1950 ;	i2c.c:263: stop_i2c();
+                           1951 ;	genCall
+   0488 C0 02              1952 	push	ar2
+   048A 12s01r80           1953 	lcall	_stop_i2c
+   048D D0 02              1954 	pop	ar2
+                           1955 ;	i2c.c:265: return byte_read;
+                           1956 ;	genCast
+   048F 7B 00              1957 	mov	r3,#0x00
+                           1958 ;	genRet
+   0491 8A 82              1959 	mov	dpl,r2
+   0493 8B 83              1960 	mov	dph,r3
+                           1961 ;	Peephole 300	removed redundant label 00107$
+   0495 22                 1962 	ret
+                           1963 ;------------------------------------------------------------
+                           1964 ;Allocation info for local variables in function 'accelbyter_m'
+                           1965 ;------------------------------------------------------------
+                           1966 ;read1                     Allocated with name '_accelbyter_m_PARM_2'
+                           1967 ;read2                     Allocated with name '_accelbyter_m_PARM_3'
+                           1968 ;addr                      Allocated with name '_accelbyter_m_addr_1_1'
+                           1969 ;slave_address_wr          Allocated with name '_accelbyter_m_slave_address_wr_1_1'
+                           1970 ;slave_address_rd          Allocated with name '_accelbyter_m_slave_address_rd_1_1'
+                           1971 ;byte_addr                 Allocated with name '_accelbyter_m_byte_addr_1_1'
+                           1972 ;------------------------------------------------------------
+                           1973 ;	i2c.c:270: int accelbyter_m(int addr, unsigned char *read1, unsigned char *read2)
+                           1974 ;	-----------------------------------------
+                           1975 ;	 function accelbyter_m
+                           1976 ;	-----------------------------------------
+   0496                    1977 _accelbyter_m:
+                           1978 ;	genReceive
+   0496 AA 83              1979 	mov	r2,dph
+   0498 E5 82              1980 	mov	a,dpl
+   049A 90s00r18           1981 	mov	dptr,#_accelbyter_m_addr_1_1
+   049D F0                 1982 	movx	@dptr,a
+   049E A3                 1983 	inc	dptr
+   049F EA                 1984 	mov	a,r2
+   04A0 F0                 1985 	movx	@dptr,a
+                           1986 ;	i2c.c:272: unsigned char slave_address_wr = CALC_SLAVE_ADDR_WR(addr,ACCEL_ID_W);
+                           1987 ;	genAssign
+   04A1 90s00r18           1988 	mov	dptr,#_accelbyter_m_addr_1_1
+   04A4 E0                 1989 	movx	a,@dptr
+   04A5 FA                 1990 	mov	r2,a
+   04A6 A3                 1991 	inc	dptr
+   04A7 E0                 1992 	movx	a,@dptr
+   04A8 FB                 1993 	mov	r3,a
+                           1994 ;	genAnd
+   04A9 7C 00              1995 	mov	r4,#0x00
+   04AB 74 07              1996 	mov	a,#0x07
+   04AD 5B                 1997 	anl	a,r3
+                           1998 ;	genRightShift
+                           1999 ;	genSignedRightShift
+                           2000 ;	genRightShiftLiteral
+                           2001 ;	genrshTwo
+   04AE FD                 2002 	mov	r5,a
+                           2003 ;	Peephole 105	removed redundant mov
+   04AF A2 E7              2004 	mov	c,acc.7
+   04B1 CC                 2005 	xch	a,r4
+   04B2 33                 2006 	rlc	a
+   04B3 CC                 2007 	xch	a,r4
+   04B4 33                 2008 	rlc	a
+   04B5 CC                 2009 	xch	a,r4
+   04B6 54 01              2010 	anl	a,#0x01
+   04B8 30 E0 02           2011 	jnb	acc.0,00112$
+   04BB 44 FE              2012 	orl	a,#0xfe
+   04BD                    2013 00112$:
+   04BD FD                 2014 	mov	r5,a
+                           2015 ;	genOr
+   04BE 74 3A              2016 	mov	a,#0x3A
+   04C0 4C                 2017 	orl	a,r4
+   04C1 FE                 2018 	mov	r6,a
+   04C2 8D 07              2019 	mov	ar7,r5
+                           2020 ;	genCast
+                           2021 ;	i2c.c:273: unsigned char slave_address_rd = CALC_SLAVE_ADDR_RD(addr,ACCEL_ID_R);
+                           2022 ;	genOr
+   04C4 43 04 3B           2023 	orl	ar4,#0x3B
+                           2024 ;	genCast
+                           2025 ;	i2c.c:274: unsigned char byte_addr = CALC_ADDR(addr);
+                           2026 ;	genAnd
+   04C7 7B 00              2027 	mov	r3,#0x00
+                           2028 ;	genCast
+                           2029 ;	i2c.c:278: start_i2c();
+                           2030 ;	genCall
+   04C9 C0 02              2031 	push	ar2
+   04CB C0 04              2032 	push	ar4
+   04CD C0 06              2033 	push	ar6
+   04CF 12s01r74           2034 	lcall	_start_i2c
+   04D2 D0 06              2035 	pop	ar6
+   04D4 D0 04              2036 	pop	ar4
+   04D6 D0 02              2037 	pop	ar2
+                           2038 ;	i2c.c:280: if(send(slave_address_wr) == SEND_FAILED)
+                           2039 ;	genCall
+   04D8 8E 82              2040 	mov	dpl,r6
+   04DA C0 02              2041 	push	ar2
+   04DC C0 04              2042 	push	ar4
+   04DE 12s01rB9           2043 	lcall	_send
+   04E1 AB 82              2044 	mov	r3,dpl
+   04E3 D0 04              2045 	pop	ar4
+   04E5 D0 02              2046 	pop	ar2
+                           2047 ;	genCmpEq
+                           2048 ;	gencjneshort
+                           2049 ;	Peephole 112.b	changed ljmp to sjmp
+                           2050 ;	Peephole 198.b	optimized misc jump sequence
+   04E7 BB 01 04           2051 	cjne	r3,#0x01,00102$
+                           2052 ;	Peephole 200.b	removed redundant sjmp
+                           2053 ;	Peephole 300	removed redundant label 00113$
+                           2054 ;	Peephole 300	removed redundant label 00114$
+                           2055 ;	i2c.c:281: return SEND_FAILED_CODE;
+                           2056 ;	genRet
+                           2057 ;	Peephole 182.b	used 16 bit load of dptr
+   04EA 90 01 00           2058 	mov	dptr,#0x0100
+                           2059 ;	Peephole 251.a	replaced ljmp to ret with ret
+   04ED 22                 2060 	ret
+   04EE                    2061 00102$:
+                           2062 ;	i2c.c:283: if(send(byte_addr) ==  SEND_FAILED)
+                           2063 ;	genCall
+   04EE 8A 82              2064 	mov	dpl,r2
+   04F0 C0 04              2065 	push	ar4
+   04F2 12s01rB9           2066 	lcall	_send
+   04F5 AA 82              2067 	mov	r2,dpl
+   04F7 D0 04              2068 	pop	ar4
+                           2069 ;	genCmpEq
+                           2070 ;	gencjneshort
+                           2071 ;	Peephole 112.b	changed ljmp to sjmp
+                           2072 ;	Peephole 198.b	optimized misc jump sequence
+   04F9 BA 01 04           2073 	cjne	r2,#0x01,00104$
+                           2074 ;	Peephole 200.b	removed redundant sjmp
+                           2075 ;	Peephole 300	removed redundant label 00115$
+                           2076 ;	Peephole 300	removed redundant label 00116$
+                           2077 ;	i2c.c:284: return SEND_FAILED_CODE;
+                           2078 ;	genRet
+                           2079 ;	Peephole 182.b	used 16 bit load of dptr
+   04FC 90 01 00           2080 	mov	dptr,#0x0100
+                           2081 ;	Peephole 112.b	changed ljmp to sjmp
+                           2082 ;	Peephole 251.b	replaced sjmp to ret with ret
+   04FF 22                 2083 	ret
+   0500                    2084 00104$:
+                           2085 ;	i2c.c:286: start_i2c();
+                           2086 ;	genCall
+   0500 C0 04              2087 	push	ar4
+   0502 12s01r74           2088 	lcall	_start_i2c
+   0505 D0 04              2089 	pop	ar4
+                           2090 ;	i2c.c:288: if(send(slave_address_rd) == SEND_FAILED)
+                           2091 ;	genCall
+   0507 8C 82              2092 	mov	dpl,r4
+   0509 12s01rB9           2093 	lcall	_send
+   050C AA 82              2094 	mov	r2,dpl
+                           2095 ;	genCmpEq
+                           2096 ;	gencjneshort
+                           2097 ;	Peephole 112.b	changed ljmp to sjmp
+                           2098 ;	Peephole 198.b	optimized misc jump sequence
+   050E BA 01 04           2099 	cjne	r2,#0x01,00106$
+                           2100 ;	Peephole 200.b	removed redundant sjmp
+                           2101 ;	Peephole 300	removed redundant label 00117$
+                           2102 ;	Peephole 300	removed redundant label 00118$
+                           2103 ;	i2c.c:289: return SEND_FAILED_CODE;
+                           2104 ;	genRet
+                           2105 ;	Peephole 182.b	used 16 bit load of dptr
+   0511 90 01 00           2106 	mov	dptr,#0x0100
+                           2107 ;	Peephole 112.b	changed ljmp to sjmp
+                           2108 ;	Peephole 251.b	replaced sjmp to ret with ret
+   0514 22                 2109 	ret
+   0515                    2110 00106$:
+                           2111 ;	i2c.c:291: *read1 = read();
+                           2112 ;	genAssign
+   0515 90s00r12           2113 	mov	dptr,#_accelbyter_m_PARM_2
+   0518 E0                 2114 	movx	a,@dptr
+   0519 FA                 2115 	mov	r2,a
+   051A A3                 2116 	inc	dptr
+   051B E0                 2117 	movx	a,@dptr
+   051C FB                 2118 	mov	r3,a
+   051D A3                 2119 	inc	dptr
+   051E E0                 2120 	movx	a,@dptr
+   051F FC                 2121 	mov	r4,a
+                           2122 ;	genCall
+   0520 C0 02              2123 	push	ar2
+   0522 C0 03              2124 	push	ar3
+   0524 C0 04              2125 	push	ar4
+   0526 12s02r22           2126 	lcall	_read
+   0529 AD 82              2127 	mov	r5,dpl
+   052B D0 04              2128 	pop	ar4
+   052D D0 03              2129 	pop	ar3
+   052F D0 02              2130 	pop	ar2
+                           2131 ;	genPointerSet
+                           2132 ;	genGenPointerSet
+   0531 8A 82              2133 	mov	dpl,r2
+   0533 8B 83              2134 	mov	dph,r3
+   0535 8C F0              2135 	mov	b,r4
+   0537 ED                 2136 	mov	a,r5
+   0538 12s00r00           2137 	lcall	__gptrput
+                           2138 ;	i2c.c:293: ack();
+                           2139 ;	genCall
+   053B 12s01r8C           2140 	lcall	_ack
+                           2141 ;	i2c.c:295: *read2 = read();
+                           2142 ;	genAssign
+   053E 90s00r15           2143 	mov	dptr,#_accelbyter_m_PARM_3
+   0541 E0                 2144 	movx	a,@dptr
+   0542 FA                 2145 	mov	r2,a
+   0543 A3                 2146 	inc	dptr
+   0544 E0                 2147 	movx	a,@dptr
+   0545 FB                 2148 	mov	r3,a
+   0546 A3                 2149 	inc	dptr
+   0547 E0                 2150 	movx	a,@dptr
+   0548 FC                 2151 	mov	r4,a
+                           2152 ;	genCall
+   0549 C0 02              2153 	push	ar2
+   054B C0 03              2154 	push	ar3
+   054D C0 04              2155 	push	ar4
+   054F 12s02r22           2156 	lcall	_read
+   0552 AD 82              2157 	mov	r5,dpl
+   0554 D0 04              2158 	pop	ar4
+   0556 D0 03              2159 	pop	ar3
+   0558 D0 02              2160 	pop	ar2
+                           2161 ;	genPointerSet
+                           2162 ;	genGenPointerSet
+   055A 8A 82              2163 	mov	dpl,r2
+   055C 8B 83              2164 	mov	dph,r3
+   055E 8C F0              2165 	mov	b,r4
+   0560 ED                 2166 	mov	a,r5
+   0561 12s00r00           2167 	lcall	__gptrput
+                           2168 ;	i2c.c:297: noack();
+                           2169 ;	genCall
+   0564 12s01r99           2170 	lcall	_noack
+                           2171 ;	i2c.c:299: stop_i2c();
+                           2172 ;	genCall
+   0567 12s01r80           2173 	lcall	_stop_i2c
+                           2174 ;	i2c.c:301: return 0;
+                           2175 ;	genRet
+                           2176 ;	Peephole 182.b	used 16 bit load of dptr
+   056A 90 00 00           2177 	mov	dptr,#0x0000
+                           2178 ;	Peephole 300	removed redundant label 00107$
+   056D 22                 2179 	ret
+                           2180 ;------------------------------------------------------------
+                           2181 ;Allocation info for local variables in function 'i2c_delay'
+                           2182 ;------------------------------------------------------------
+                           2183 ;------------------------------------------------------------
+                           2184 ;	i2c.c:305: void i2c_delay()
+                           2185 ;	-----------------------------------------
+                           2186 ;	 function i2c_delay
+                           2187 ;	-----------------------------------------
+   056E                    2188 _i2c_delay:
+                           2189 ;	i2c.c:311: __endasm;
+                           2190 ;	genInline
+   056E 00                 2191 	            nop
+   056F 00                 2192 	            nop
+   0570 00                 2193 	            nop
+                           2194 ;	Peephole 300	removed redundant label 00101$
+   0571 22                 2195 	ret
+                           2196 	.area CSEG    (CODE)
+                           2197 	.area CONST   (CODE)
+   0000                    2198 __str_0:
+   0000 25 63              2199 	.ascii "%c"
+   0002 00                 2200 	.db 0x00
+   0003                    2201 __str_1:
+   0003 0A                 2202 	.db 0x0A
+   0004 0D                 2203 	.db 0x0D
+   0005 50 6C 65 61 73 65  2204 	.ascii "Please enter a valid choice 1-6."
+        20 65 6E 74 65 72
+        20 61 20 76 61 6C
+        69 64 20 63 68 6F
+        69 63 65 20 31 2D
+        36 2E
+   0025 0A                 2205 	.db 0x0A
+   0026 0D                 2206 	.db 0x0D
+   0027 00                 2207 	.db 0x00
+   0028                    2208 __str_2:
+   0028 1B                 2209 	.db 0x1B
+   0029 5B 32 4A           2210 	.ascii "[2J"
+   002C 00                 2211 	.db 0x00
+   002D                    2212 __str_3:
+   002D 1B                 2213 	.db 0x1B
+   002E 5B 30 3B 30 48     2214 	.ascii "[0;0H"
+   0033 00                 2215 	.db 0x00
+   0034                    2216 __str_4:
+   0034 50 72 65 73 73 20  2217 	.ascii "Press enter to quit..."
+        65 6E 74 65 72 20
+        74 6F 20 71 75 69
+        74 2E 2E 2E
+   004A 0A                 2218 	.db 0x0A
+   004B 0D                 2219 	.db 0x0D
+   004C 00                 2220 	.db 0x00
+                           2221 	.area XINIT   (CODE)
